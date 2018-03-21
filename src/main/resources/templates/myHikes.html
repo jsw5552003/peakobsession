@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+    <div class="container">
+        <div class="row pt-3">
+            <div class="col">
+                <h2>All Books</h2>
+            </div>
+        </div>
+        <div class="row" th:if="${status}">
+            <div class="col">
+                <div class="alert alert-danger" th:if="${not status.success}" th:text="${status.message}"></div>
+                <div class="alert alert-success" th:if="${status.success}" th:text="${status.message}"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table id="booksTable" class="table table-hover">
+                <thead>
+			      <tr>
+			        <th>ISBN</th>
+			        <th>TITLE</th>
+			        <th>Author</th>
+			        <th>Genre</th>
+			        <th>Update</th>
+			        <th>Delete</th>
+			      </tr>
+			      </thead>
+			      <tbody>
+			      <tr class="table-warning" th:each="book : ${books}">
+			        <td th:text="${book.isbn}"></td>
+			        <td th:text="${book.title}"></td>
+			        <td th:text="${book.author}"></td>
+			        <td th:text="${book.genre}"></td>
+			        <td><a class="btn btn-secondary" th:href="${'/books/update?isbn=' + book.isbn}">Update</a></td>
+			        <td><a class="btn btn-danger" th:href="${'/books/delete?isbn=' + book.isbn}">Delete</a></td>
+			      </tr>
+			      </tbody>
+			    </table>
+            </div>
+        </div>
+        <div class="row py-3">
+            <div class="col">
+                <a class="btn btn-info" href="/books/home">Back</a>
+            </div>
+            <div class="col">
+                <a class="btn btn-info" href="/books/add">Add Book</a>
+            </div>
+        </div>
+    </div>
+    <script>
+    $(document).ready(function(){
+        $('#booksTable').DataTable();
+    });
+    </script>
+</body>
+</html>

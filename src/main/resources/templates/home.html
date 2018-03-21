@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head"></head>
+<body>
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+	<div class="container">
+		<div class="row pt-3">
+			<div class="col">
+			 <div class="alert alert-primary">Please make your selection below.</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col"><a class="btn btn-info" href="/books/all">View My Hikes</a></div>
+			<div class="col"><a class="btn btn-info" href="/books/add">Add Hike</a></div>
+		</div>
+	</div>
+</body>
+</html>

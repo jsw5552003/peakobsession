@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head"></head>
+<body>
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+	<div class="container">
+		<div class="row pt-3">
+			<div class="col">
+				<h2>Add Hike</h2>
+			</div>
+		</div>
+		<div class="row" th:if="${status}">
+            <div class="col">
+                <div class="alert alert-danger" th:if="${not status.success}" th:text="${status.message}"></div>
+                <div class="alert alert-success" th:if="${status.success}" th:text="${status.message}"></div>
+            </div>
+        </div>
+		<div class="row">
+			<div class="col">
+				<form action="/books/add" method="post">
+					<div class="form-group">
+						<label for="isbn">ISBN</label> <input type="text"
+							class="form-control" id="isbn" name="isbn" required="true"/>
+					</div>
+					<div class="form-group">
+						<label for="title">Title</label> <input type="text"
+							class="form-control" id="title" name="title" required="true"/>
+					</div>
+					<div class="form-group">
+                        <label for="author">Author</label> <input type="text"
+                            class="form-control" id="author" name="author" required="true"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Genre</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="genre" id="genre1" value="NON_FICTION" required="true"/>
+                      <label class="form-check-label" for="genre1">Non Fiction</label>
+                    </div>                   
+                    <div class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="genre" id="genre2" value="SCIENCE_FICTION"/>
+					  <label class="form-check-label" for="genre2">Science Fiction</label>
+					</div>
+					<div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="genre" id="genre3" value="FANTASY"/>
+                      <label class="form-check-label" for="genre3">Fantasy</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="genre" id="genre4" value="ROMANCE"/>
+                      <label class="form-check-label" for="genre4">Science Fiction</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="genre" id="genre5" value="CRIME"/>
+                      <label class="form-check-label" for="genre5">Crime</label>
+                    </div>
+					<div class="form-group pt-3">
+					   <button type="submit" class="btn btn-primary">Submit</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="row padding-top-md py-3">
+            <div class="col">
+                <a class="btn btn-info" href="/books/home">Back</a>
+            </div>
+        </div>
+	</div>
+</body>
+</html>
