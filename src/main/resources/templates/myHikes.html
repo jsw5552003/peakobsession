@@ -6,7 +6,7 @@
     <div class="container">
         <div class="row pt-3">
             <div class="col">
-                <h2>All Books</h2>
+                <h2>My HIkes</h2>
             </div>
         </div>
         <div class="row" th:if="${status}">
@@ -17,25 +17,17 @@
         </div>
         <div class="row">
             <div class="col">
-                <table id="booksTable" class="table table-hover">
+                <table id="myHikesTable" class="table table-hover">
                 <thead>
 			      <tr>
-			        <th>ISBN</th>
-			        <th>TITLE</th>
-			        <th>Author</th>
-			        <th>Genre</th>
-			        <th>Update</th>
-			        <th>Delete</th>
+			        <th>Date</th>
+			        <th>Miles</th>
 			      </tr>
-			      </thead>
+			    </thead>
 			      <tbody>
-			      <tr class="table-warning" th:each="book : ${books}">
-			        <td th:text="${book.isbn}"></td>
-			        <td th:text="${book.title}"></td>
-			        <td th:text="${book.author}"></td>
-			        <td th:text="${book.genre}"></td>
-			        <td><a class="btn btn-secondary" th:href="${'/books/update?isbn=' + book.isbn}">Update</a></td>
-			        <td><a class="btn btn-danger" th:href="${'/books/delete?isbn=' + book.isbn}">Delete</a></td>
+			      <tr class="table-warning" th:each="hike : ${hikes}">
+			        <td th:text="${hike.date}"></td>
+			        <td th:text="${hike.miles}"></td>
 			      </tr>
 			      </tbody>
 			    </table>
@@ -43,10 +35,10 @@
         </div>
         <div class="row py-3">
             <div class="col">
-                <a class="btn btn-info" href="/books/home">Back</a>
+                <a class="btn btn-info" href="/home">Home</a>
             </div>
             <div class="col">
-                <a class="btn btn-info" href="/books/add">Add Book</a>
+                <a class="btn btn-info" href="/myhikes/add">Add Hike</a>
             </div>
         </div>
     </div>
