@@ -23,7 +23,7 @@ public class AppStartupRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         logger.info("STARTUP: Populating data");
-        hikeService.addHike(new UserHike(LocalDate.now(), 11.2));
+        hikeService.addHike(new UserHike(LocalDate.now(), 11.2, 2700));
         logger.info("STARTUP: Finished Populating data");
         
     }

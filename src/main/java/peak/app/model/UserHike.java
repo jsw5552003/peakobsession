@@ -1,5 +1,7 @@
 package peak.app.model;
 
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -17,15 +19,18 @@ public class UserHike {
     private LocalDate date;
     
     private double mileage;
+    
+    private int elevation;
 
     public UserHike() {
 		super();
 	}  
 
-	public UserHike(LocalDate hikeDate, double mileage) {
+	public UserHike(LocalDate hikeDate, double mileage, int elevation) {
 		super();
 		this.date = hikeDate;
 		this.mileage = mileage;
+		this.elevation = elevation;
 	}
 
 	public LocalDate getDate()
@@ -48,8 +53,14 @@ public class UserHike {
         this.mileage = mileage;
     }
     
+    public int getElevation()
+    {
+    	return elevation;
+    }
     
-    
-    
+    public void setElevation(int elevation)
+    {
+    	this.elevation = elevation;
+    }
 
 }

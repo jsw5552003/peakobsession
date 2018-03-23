@@ -6,7 +6,7 @@
     <div class="container">
         <div class="row pt-3">
             <div class="col">
-                <h2>My HIkes</h2>
+                <h2>My Hikes</h2>
             </div>
         </div>
         <div class="row" th:if="${status}">
@@ -21,13 +21,23 @@
                 <thead>
 			      <tr>
 			        <th>Date</th>
+			        <th>Mountains</th>
 			        <th>Miles</th>
+			        <th>Elevation</th>
 			      </tr>
 			    </thead>
 			      <tbody>
 			      <tr class="table-warning" th:each="hike : ${hikes}">
 			        <td th:text="${hike.date}"></td>
+			        <td></td>
 			        <td th:text="${hike.miles}"></td>
+			        <td th:text="${hike.elevation}"></td>
+			      </tr>
+			      <tr class="table-dark">
+			        <td>Total:</td>
+			        <td></td>
+			        <td></td>
+			        <td></td>
 			      </tr>
 			      </tbody>
 			    </table>

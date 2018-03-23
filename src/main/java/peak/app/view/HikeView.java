@@ -5,6 +5,8 @@ public class HikeView {
     private String date;
     
     private String miles;
+    
+    private String elevation;
 
     public String getDate()
     {
@@ -25,5 +27,14 @@ public class HikeView {
     {
         this.miles = miles;
     }
+
+	public String getElevation() {
+		return elevation;
+	}
+
+	public void setElevation(String elevation) {
+		this.elevation = elevation;
+	}
+    
 
 }

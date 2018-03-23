@@ -51,8 +51,10 @@ public class UserHikeController {
             HikeView hikeView = new HikeView();
             hikeView.setDate(hikeList.get(i).getDate().toString());
             hikeView.setMiles("" + hikeList.get(i).getMileage());
+            hikeView.setElevation("" + hikeList.get(i).getElevation());
             hikes[i] = hikeView;
-            logger.debug("     Hike: " + hikeView.getDate() + " " + hikeView.getMiles() + " miles.");
+            logger.debug("     Hike: " + hikeView.getDate() + " " + hikeView.getMiles() + " miles " + 
+            		hikeView.getElevation() + " feet elevation.");
         }
         model.addAttribute("hikes", hikes);
         return "myHikes";
