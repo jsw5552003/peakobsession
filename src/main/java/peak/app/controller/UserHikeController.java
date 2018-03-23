@@ -1,18 +1,25 @@
 package peak.app.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import peak.app.model.Mountain;
 import peak.app.model.UserHike;
+import peak.app.service.MountainService;
 import peak.app.service.UserHikeService;
 import peak.app.view.HikeView;
+import peak.app.view.StatusMessage;
 
 @Controller
 public class UserHikeController {
@@ -21,6 +28,9 @@ public class UserHikeController {
     
     @Autowired
     UserHikeService hikeService;
+    
+    @Autowired
+    MountainService mountainService;
     
     @RequestMapping({"/"})
     public String redirect(Model model)
@@ -37,7 +47,7 @@ public class UserHikeController {
     }
     
     @RequestMapping("/myhikes")
-    public String showAllHIkes(Model model)
+    public String showAllHikes(Model model)
     {     
         logger.info("Handling a request to show all user's hikes");
         //get data from service
@@ -64,6 +74,49 @@ public class UserHikeController {
     public String addHike(Model model)
     {
     	logger.info("Handling a request to add a hike.");
+    	commonAddHike(model);
     	return "addHike";
+    }
+    
+    @RequestMapping(value = "/myhikes/addhike", method = RequestMethod.POST)
+    public String addHike(@RequestParam(value="date")@DateTimeFormat(iso = ISO.DATE)LocalDate date,
+                          @RequestParam(value="miles")double miles, @RequestParam(value="elevation")int elevation,
+                          @RequestParam(value="mountain", required = false)List<String> mountains, Model model)
+    {
+        logger.debug("Handling a request to add a hike with date: " + date.toString() + " miles: " + miles + 
+                " elevation: " + elevation);
+        logger.debug("                Mountains: " + (mountains == null ? "None" : mountains.size()));
+        if(logger.isDebugEnabled())
+        {
+            if(mountains != null)
+            {
+                for(String id : mountains)
+                {
+                    logger.debug("                 ID: " + id);
+                }
+            }
+        }
+        commonAddHike(model);
+        UserHike hike = new UserHike(date, miles, elevation);
+        if(mountains != null)
+        {
+            for(String id : mountains)
+            {
+                logger.debug("                 Mountain ID: " + id);
+                Mountain mountain = new Mountain(Long.getLong(id));
+                hike.addMountain(mountain);
+            }
+        }
+        hikeService.addHike(hike);
+        StatusMessage status = new StatusMessage("Hike successfully added for date: " + date.toString() + ".", true);
+        model.addAttribute("status", status);
+        return "addHike";
+    }
+    
+    private void commonAddHike(Model model)
+    {
+        LocalDate local = LocalDate.now();
+        model.addAttribute("today", local.toString());
+        model.addAttribute("mountains", mountainService.getAllMountains());
     }
 }

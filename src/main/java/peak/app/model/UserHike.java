@@ -1,16 +1,20 @@
 package peak.app.model;
 
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "USER_HIKES")
 public class UserHike {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -21,6 +25,12 @@ public class UserHike {
     private double mileage;
     
     private int elevation;
+    
+    @ManyToMany
+    @JoinTable(name="USER_HIKES_MOUNTAINS",
+            joinColumns=@JoinColumn(name="USER_HIKE_ID"),
+            inverseJoinColumns=@JoinColumn(name="MOUNTAIN_ID"))
+    private List<Mountain> mountains;
 
     public UserHike() {
 		super();
@@ -61,6 +71,23 @@ public class UserHike {
     public void setElevation(int elevation)
     {
     	this.elevation = elevation;
+    }
+
+    public List<Mountain> getMountains()
+    {
+        return mountains;
+    }
+
+    public void setMountains(List<Mountain> mountains)
+    {
+        this.mountains = mountains;
+    }
+    
+    public void addMountain(Mountain mountain)
+    {
+        if(this.mountains == null)
+            mountains = new ArrayList<Mountain>();
+        mountains.add(mountain);
     }
 
 }
