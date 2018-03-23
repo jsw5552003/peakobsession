@@ -21,11 +21,17 @@ public class UserHikeService {
     
     public List<UserHike> getAllHikes()
     {
-        logger.info("Get all hikes");
+        logger.info("Get all hikes.");
         ArrayList<UserHike> hikeList = new ArrayList<>();
         Iterable<UserHike> iterable = hikeRepository.findAll();
         iterable.forEach(hikeList::add);
         return hikeList;
+    }
+    
+    public void addHike(UserHike hike)
+    {
+    	logger.info("Add a hike.");
+    	hikeRepository.save(hike);
     }
 
 }

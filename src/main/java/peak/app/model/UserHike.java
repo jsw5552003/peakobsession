@@ -1,5 +1,6 @@
 package peak.app.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -13,26 +14,36 @@ public class UserHike {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
     
-    private Date hikeDate;
+    private LocalDate date;
     
-    private float mileage;
+    private double mileage;
 
-    public Date getDate()
+    public UserHike() {
+		super();
+	}  
+
+	public UserHike(LocalDate hikeDate, double mileage) {
+		super();
+		this.date = hikeDate;
+		this.mileage = mileage;
+	}
+
+	public LocalDate getDate()
     {
-        return hikeDate;
+        return date;
     }
 
-    public void setDate(Date date)
+    public void setDate(LocalDate date)
     {
-        this.hikeDate = date;
+        this.date = date;
     }
 
-    public float getMileage()
+    public double getMileage()
     {
         return mileage;
     }
 
-    public void setMileage(float mileage)
+    public void setMileage(double mileage)
     {
         this.mileage = mileage;
     }

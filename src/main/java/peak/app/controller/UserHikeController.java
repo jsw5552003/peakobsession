@@ -42,16 +42,26 @@ public class UserHikeController {
         logger.info("Handling a request to show all user's hikes");
         //get data from service
         List<UserHike> hikeList = hikeService.getAllHikes();
+        logger.debug("Retrieved all hikes, total: " + (hikeList.isEmpty() ? "0." : hikeList.size()));
         //create array to send to template
         HikeView[] hikes = new HikeView[hikeList.size()];
         //convert backend data to view object and put in array
-        for(UserHike hike: hikeList)
+        for(int i = 0; i < hikes.length; i++)
         {
             HikeView hikeView = new HikeView();
-            hikeView.setDate(hike.getDate().toString());
-            hikeView.setMiles(new Float(hike.getMileage()).toString());
+            hikeView.setDate(hikeList.get(i).getDate().toString());
+            hikeView.setMiles("" + hikeList.get(i).getMileage());
+            hikes[i] = hikeView;
+            logger.debug("     Hike: " + hikeView.getDate() + " " + hikeView.getMiles() + " miles.");
         }
         model.addAttribute("hikes", hikes);
         return "myHikes";
+    }
+    
+    @RequestMapping("/myhikes/addhike")
+    public String addHike(Model model)
+    {
+    	logger.info("Handling a request to add a hike.");
+    	return "addHike";
     }
 }
