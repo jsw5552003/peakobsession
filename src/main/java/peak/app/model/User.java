@@ -2,11 +2,13 @@ package peak.app.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "USERS")
 public class User {
     @Id
-    private String id;
+    private long id;
     
     private String firstName;
     
@@ -14,7 +16,10 @@ public class User {
     
     private String userName;
 
-    
+    public User()
+    {
+    	super();
+    }
     
     public User(String firstName, String lastName, String userName)
     {
@@ -24,12 +29,12 @@ public class User {
         this.userName = userName;
     }
 
-    public String getId()
+    public long getId()
     {
         return id;
     }
 
-    public void setId(String id)
+    public void setId(long id)
     {
         this.id = id;
     }

@@ -1,5 +1,8 @@
 package peak.app.view;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HikeView {
     
     private String date;
@@ -7,6 +10,8 @@ public class HikeView {
     private String miles;
     
     private String elevation;
+    
+    private List<String> mountains;
 
     public String getDate()
     {
@@ -34,6 +39,21 @@ public class HikeView {
 
 	public void setElevation(String elevation) {
 		this.elevation = elevation;
+	}
+
+	public List<String> getMountains() {
+		return mountains;
+	}
+
+	public void setMountains(List<String> mountains) {
+		this.mountains = mountains;
+	}
+	
+	public void addMountain(String mountain)
+	{
+		if(this.mountains == null)
+			this.mountains = new ArrayList<String>();
+		this.mountains.add(mountain);
 	}
     
 

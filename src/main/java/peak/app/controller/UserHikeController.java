@@ -62,9 +62,18 @@ public class UserHikeController {
             hikeView.setDate(hikeList.get(i).getDate().toString());
             hikeView.setMiles("" + hikeList.get(i).getMileage());
             hikeView.setElevation("" + hikeList.get(i).getElevation());
-            hikes[i] = hikeView;
             logger.debug("     Hike: " + hikeView.getDate() + " " + hikeView.getMiles() + " miles " + 
             		hikeView.getElevation() + " feet elevation.");
+            if(hikeList.get(i).getMountains() != null)
+            {
+            	for(Mountain mountain : hikeList.get(i).getMountains())
+            	{
+            		hikeView.addMountain(mountain.getName());
+            		logger.debug("     Mountain: " + mountain.getName());
+            	}
+            }
+            hikes[i] = hikeView;
+            
         }
         model.addAttribute("hikes", hikes);
         return "myHikes";
@@ -86,16 +95,6 @@ public class UserHikeController {
         logger.debug("Handling a request to add a hike with date: " + date.toString() + " miles: " + miles + 
                 " elevation: " + elevation);
         logger.debug("                Mountains: " + (mountains == null ? "None" : mountains.size()));
-        if(logger.isDebugEnabled())
-        {
-            if(mountains != null)
-            {
-                for(String id : mountains)
-                {
-                    logger.debug("                 ID: " + id);
-                }
-            }
-        }
         commonAddHike(model);
         UserHike hike = new UserHike(date, miles, elevation);
         if(mountains != null)
@@ -103,7 +102,7 @@ public class UserHikeController {
             for(String id : mountains)
             {
                 logger.debug("                 Mountain ID: " + id);
-                Mountain mountain = new Mountain(Long.getLong(id));
+                Mountain mountain = new Mountain(Long.parseLong(id));
                 hike.addMountain(mountain);
             }
         }

@@ -86,8 +86,8 @@ public class UserHike {
     public void addMountain(Mountain mountain)
     {
         if(this.mountains == null)
-            mountains = new ArrayList<Mountain>();
-        mountains.add(mountain);
+            this.mountains = new ArrayList<Mountain>();
+        this.mountains.add(mountain);
     }
 
 }
