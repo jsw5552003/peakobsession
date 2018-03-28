@@ -29,17 +29,19 @@
 			      <tbody>
 			      <tr class="table-warning" th:each="hike : ${hikes}">
 			        <td th:text="${hike.date}"></td>
-			        <td></td>
+			        <td><div th:each="mountain : ${hike.mountains}"><span th:text="${mountain}"></span></div></td>
 			        <td th:text="${hike.miles}"></td>
 			        <td th:text="${hike.elevation}"></td>
 			      </tr>
+			      </tbody>
+			      <tfoot>
 			      <tr class="table-dark">
 			        <td>Total:</td>
 			        <td></td>
-			        <td></td>
-			        <td></td>
+			        <td id="footerMiles"></td>
+			        <td id="footerElevation"></td>
 			      </tr>
-			      </tbody>
+			      </tfoot>
 			    </table>
             </div>
         </div>
@@ -54,7 +56,30 @@
     </div>
     <script>
     $(document).ready(function(){
-        $('#myHikesTable').DataTable();
+    	jQuery.fn.dataTable.Api.register( 'sum()', function ( ) {
+    	    return this.flatten().reduce( function ( a, b ) {
+    	        if ( typeof a === 'string' ) {
+    	            a = a.replace(/[^\d.-]/g, '') * 1;
+    	        }
+    	        if ( typeof b === 'string' ) {
+    	            b = b.replace(/[^\d.-]/g, '') * 1;
+    	        }
+    	 
+    	        return a + b;
+    	    }, 0 );
+    	} );
+    	
+        $('#myHikesTable').DataTable( {
+            drawCallback: function () {
+                var api = this.api();
+                $('#footerMiles').html(
+                  api.column( 2, {page:'current'} ).data().sum()
+                );
+                $('#footerElevation').html(
+                  api.column( 3, {page:'current'} ).data().sum()
+                );
+              }
+            } );
     });
     </script>
 </body>

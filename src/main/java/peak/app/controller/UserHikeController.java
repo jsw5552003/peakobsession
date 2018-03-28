@@ -75,6 +75,10 @@ public class UserHikeController {
             hikes[i] = hikeView;
             
         }
+        for(int i = 0; i < hikes.length; i++)
+        {
+            logger.debug("HERE IT IS" + hikes[i].getMountains().toString());
+        }
         model.addAttribute("hikes", hikes);
         return "myHikes";
     }
