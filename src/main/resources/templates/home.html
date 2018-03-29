@@ -1,6 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: head"></head>
+<head>
+    <div th:replace="fragments/header :: header"></div>
+</head>
 <body>
     <nav th:replace="fragments/navbar :: navbar"></nav>
 	<div class="container">
@@ -11,7 +13,7 @@
 		</div>
 		<div class="row">
 			<div class="col"><a class="btn btn-info" href="/myhikes">View My Hikes</a></div>
-			<div class="col"><a class="btn btn-info" href="/myhikes/add">Add Hike</a></div>
+			<div class="col"><a class="btn btn-info" href="/myhikes/addhike">Add Hike</a></div>
 		</div>
 	</div>
 </body>
