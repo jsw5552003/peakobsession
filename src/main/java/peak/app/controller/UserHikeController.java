@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import peak.app.common.AuthenticationFacade;
 import peak.app.model.Mountain;
 import peak.app.model.UserHike;
 import peak.app.service.MountainService;
@@ -32,6 +33,9 @@ public class UserHikeController {
     @Autowired
     MountainService mountainService;
     
+    @Autowired
+    private AuthenticationFacade authenticationFacade;
+    
     @RequestMapping({"/"})
     public String redirect(Model model)
     {
@@ -41,8 +45,9 @@ public class UserHikeController {
     @RequestMapping("/home")
     public String home(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model)
     {
-        logger.info("Handling a request to go to home page");
+        logger.info("Handling a request to go to home page.");
         model.addAttribute("name", name);
+        
         return "home";
     }
     

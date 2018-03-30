@@ -5,12 +5,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import peak.app.service.UserService;
 
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Autowired
@@ -19,18 +20,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
-        http
-            .authorizeRequests()
-            .anyRequest().authenticated()
-            .and()
-            .httpBasic()
-            .and()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .formLogin().loginPage("/login").permitAll()
-            .and()
-            .logout()
-            .permitAll();
+        //TODO: ENABLE CSRF
+        http.csrf().disable()
+                .authorizeRequests().anyRequest().authenticated()
+                .antMatchers("/admin/**").hasAnyRole("ADMIN")
+                .and().formLogin().loginPage("/login").permitAll()
+                .and().logout().permitAll();
             
     }
     
