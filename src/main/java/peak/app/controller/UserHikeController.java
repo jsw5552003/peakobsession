@@ -53,10 +53,11 @@ public class UserHikeController {
     
     @RequestMapping("/myhikes")
     public String showAllHikes(Model model)
-    {     
-        logger.info("Handling a request to show all user's hikes");
+    {   
+        String userName = authenticationFacade.getAuthentication().getName();
+        logger.info("Handling a request to show all user's hikes for " + userName);
         //get data from service
-        List<UserHike> hikeList = hikeService.getAllHikes();
+        List<UserHike> hikeList = hikeService.getAllHikes(userName);
         logger.debug("Retrieved all hikes, total: " + (hikeList.isEmpty() ? "0." : hikeList.size()));
         //create array to send to template
         HikeView[] hikes = new HikeView[hikeList.size()];
@@ -104,6 +105,8 @@ public class UserHikeController {
         logger.debug("Handling a request to add a hike with date: " + date.toString() + " miles: " + miles + 
                 " elevation: " + elevation);
         logger.debug("                Mountains: " + (mountains == null ? "None" : mountains.size()));
+        String userName = authenticationFacade.getAuthentication().getName();
+        logger.debug("User: " + userName);
         commonAddHike(model);
         UserHike hike = new UserHike(date, miles, elevation);
         if(mountains != null)
@@ -115,7 +118,7 @@ public class UserHikeController {
                 hike.addMountain(mountain);
             }
         }
-        hikeService.addHike(hike);
+        hikeService.addHike(hike, userName);
         StatusMessage status = new StatusMessage("Hike successfully added for date: " + date.toString() + ".", true);
         model.addAttribute("status", status);
         return "addHike";

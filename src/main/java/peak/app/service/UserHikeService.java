@@ -36,15 +36,17 @@ public class UserHikeService {
         logger.info("Get all hikes for user: " + userString);
         User user = userRepository.findByEmail(userString);
         ArrayList<UserHike> hikeList = new ArrayList<>();
-        Iterable<UserHike> iterable = hikeRepository.findAll();
+        Iterable<UserHike> iterable = hikeRepository.findByUser(user);
         iterable.forEach(hikeList::add);
         return hikeList;
     }
     
     @Transactional
-    public void addHike(UserHike hike)
+    public void addHike(UserHike hike, String userString)
     {
-    	logger.info("Add a hike.");
+    	logger.info("Add a hike for user: " + userString);
+    	User user = userRepository.findByEmail(userString);
+    	hike.setUser(user);
     	hikeRepository.save(hike);
     }
 

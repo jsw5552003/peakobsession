@@ -22,8 +22,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     {
         //TODO: ENABLE CSRF
         http.csrf().disable()
-                .authorizeRequests().anyRequest().authenticated()
+                .authorizeRequests()
                 .antMatchers("/admin/**").hasAnyRole("ADMIN")
+                .antMatchers("/webjars/**").permitAll()
+                .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login").permitAll()
                 .and().logout().permitAll();
             
