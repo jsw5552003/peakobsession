@@ -16,7 +16,7 @@
   ('Carter Dome', '4780'),
   ; 
   
- INSERT INTO USERS (id, first_name, last_name, email, password) VALUES (1, 'John', 'Wilson', 'jwilson@worcester.edu', 'password');
+ INSERT INTO USERS (id, first_name, last_name, email, password, user_name) VALUES (1, 'John', 'Wilson', 'jwilson@worcester.edu', 'password', 'Grizzly');
   
  INSERT INTO ROLES (id, name) VALUES (1, 'ROLE_ADMIN');
  INSERT INTO ROLES (id, name) VALUES (2, 'ROLE_USER');

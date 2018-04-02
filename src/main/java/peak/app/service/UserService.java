@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,13 +23,13 @@ public class UserService implements UserDetailsService {
     UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException
     {
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findByUserName(userName);
         if (user == null){
             throw new UsernameNotFoundException("Invalid username or password.");
         }
-        return new org.springframework.security.core.userdetails.User(user.getEmail(),
+        return new org.springframework.security.core.userdetails.User(user.getUserName(),
                 user.getPassword(),
                 mapRolesToAuthorities(user.getRoles()));
     }
@@ -37,6 +38,17 @@ public class UserService implements UserDetailsService {
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
+    }
+    
+    public void createNewUser(User user) throws AuthenticationException
+    {
+        if(userRepository.findByEmail(user.getEmail()) != null)
+            throw new UsernameNotFoundException("That email is already in use.");
+        
+        if(userRepository.findByUserName(user.getUserName()) != null)
+            throw new UsernameNotFoundException("That username is already in use.");
+        
+        userRepository.save(user);
     }
 
 }
