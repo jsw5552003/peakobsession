@@ -36,21 +36,6 @@ public class UserHikeController {
     @Autowired
     private AuthenticationFacade authenticationFacade;
     
-    @RequestMapping({"/"})
-    public String redirect(Model model)
-    {
-        return "redirect:/home";
-    }
-    
-    @RequestMapping("/home")
-    public String home(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model)
-    {
-        logger.info("Handling a request to go to home page.");
-        model.addAttribute("name", name);
-        
-        return "home";
-    }
-    
     @RequestMapping("/myhikes")
     public String showAllHikes(Model model)
     {   

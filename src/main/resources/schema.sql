@@ -46,3 +46,17 @@ CREATE TABLE USERS_ROLES (
   ROLE_ID BIGINT,
   foreign key (USER_ID ) references users(ID),
   foreign key (ROLE_ID ) references roles(ID) );
+  
+DROP TABLE IF EXISTS HIKE_LISTS;
+
+CREATE TABLE HIKE_LISTS (
+  ID BIGINT PRIMARY KEY auto_increment,
+  NAME VARCHAR(100) );
+
+DROP TABLE IF EXISTS HIKE_LISTS_MOUNTAINS;  
+  
+CREATE TABLE HIKE_LISTS_MOUNTAINS (
+  HIKE_LIST_ID BIGINT,
+  MOUNTAIN_ID BIGINT,
+  foreign key (HIKE_LIST_ID ) references hike_lists(ID),
+  foreign key (MOUNTAIN_ID ) references mountains(ID) );
