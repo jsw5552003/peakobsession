@@ -3,6 +3,8 @@ package peak.app.service;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,6 +20,7 @@ import peak.app.repository.UserRepository;
 
 @Service
 public class UserService implements UserDetailsService {
+    private final Logger logger = LoggerFactory.getLogger(UserService.class);
     
     @Autowired
     UserRepository userRepository;
@@ -42,13 +45,15 @@ public class UserService implements UserDetailsService {
     
     public void createNewUser(User user) throws AuthenticationException
     {
+        logger.debug("Create New User check to see if email and user name exist");
         if(userRepository.findByEmail(user.getEmail()) != null)
             throw new UsernameNotFoundException("That email is already in use.");
-        
+        logger.debug("Email is unique.");
         if(userRepository.findByUserName(user.getUserName()) != null)
             throw new UsernameNotFoundException("That username is already in use.");
-        
+        logger.debug("User name is unique. Go ahead and create user.");
         userRepository.save(user);
+        logger.debug("New user created.");
     }
 
 }

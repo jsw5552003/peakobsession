@@ -24,6 +24,6 @@
  INSERT INTO users_roles (user_id, role_id) VALUES (1, 1);
  INSERT INTO users_roles (user_id, role_id) VALUES (1, 2);
  
- INSERT INTO HIKE_LISTS (NAME) VALUES ('NH48'), ('NE67'), ('Terrifying 25');
+ INSERT INTO MOUNTAIN_LISTS (NAME) VALUES ('NH48'), ('NE67'), ('Terrifying 25');
  
- INSERT INTO HIKE_LISTS_MOUNTAINS VALUES (1, 1), (1, 2), (1,3);
+ INSERT INTO MOUNTAIN_LISTS_MOUNTAINS VALUES (1, 1), (1, 2), (1,3);
