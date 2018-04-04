@@ -58,5 +58,5 @@ DROP TABLE IF EXISTS MOUNTAIN_LISTS_MOUNTAINS;
 CREATE TABLE MOUNTAIN_LISTS_MOUNTAINS (
   MOUNTAIN_LIST_ID BIGINT,
   MOUNTAIN_ID BIGINT,
-  foreign key (HIKE_LIST_ID ) references mountain_lists(ID),
+  foreign key (MOUNTAIN_LIST_ID ) references mountain_lists(ID),
   foreign key (MOUNTAIN_ID ) references mountains(ID) );

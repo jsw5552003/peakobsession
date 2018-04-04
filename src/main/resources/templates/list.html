@@ -8,15 +8,10 @@
     <div class="container">
         <div class="row pt-3">
             <div class="col">
-             <div class="alert alert-primary">Hiking Lists:</div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col" th:each="list : ${lists}"><a class="btn btn-info" 
-                th:text="${list.name}"  
-                th:href="@{/list(name=${list.name},type=${list.type})}"></a>
+             <div class="alert alert-primary"><h2 th:text="${list.name}"></h2></div>
             </div>
         </div>
     </div>
+    <div th:if="${list.isMountainType()}" th:replace="fragments/mountainlist :: mountainlist"></div>
 </body>
 </html>
