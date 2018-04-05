@@ -2,9 +2,9 @@ package peak.app.view;
 
 public class MountainView {
 
-    String name;
+    private String name;
     
-    int elevation;
+    private int elevation;
     
     public MountainView() {}
     

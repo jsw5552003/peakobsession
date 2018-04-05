@@ -8,6 +8,8 @@ public class ListView {
     
     private String type;
     
+    private String description;
+    
     public ListView() {}
     
     public ListView(String name)
@@ -33,6 +35,16 @@ public class ListView {
     public boolean isMountainList()
     {
         return Constants.LIST_TYPE_MOUNTAIN.equals(getType());
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
     }
 
 }

@@ -53,6 +53,7 @@ public class ListController {
             MountainList mList = listService.getMountainList(name);
             MountainListView mListView = new MountainListView();
             mListView.setName(mList.getName());
+            mListView.setDescription(mList.getDescription());
             for(Mountain mountain : mList.getMountains())
             {
                 mListView.addMountain(new MountainView(mountain.getName(),

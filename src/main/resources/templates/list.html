@@ -8,10 +8,13 @@
     <div class="container">
         <div class="row pt-3">
             <div class="col">
-             <div class="alert alert-primary"><h2 th:text="${list.name}"></h2></div>
+             <div class="alert alert-primary">
+                <h2 th:text="${list.name}"></h2>
+                <h4 th:text="${list.description}"></h4>
+             </div>
             </div>
         </div>
+        <div th:if="${list.isMountainType()}" th:replace="fragments/mountainlist :: mountainlist"></div>
     </div>
-    <div th:if="${list.isMountainType()}" th:replace="fragments/mountainlist :: mountainlist"></div>
 </body>
 </html>
