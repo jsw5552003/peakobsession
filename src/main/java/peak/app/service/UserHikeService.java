@@ -3,6 +3,7 @@ package peak.app.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -55,7 +56,10 @@ public class UserHikeService {
     public Set<Mountain> getMountainsHiked(String userString)
     {
         List<UserHike> hikeList = getAllHikes(userString);
-        // hikeList.stream().
+        Set<Mountain> mountainSet = hikeList.stream().map(UserHike::getMountains).flatMap(List::stream)
+                .collect(Collectors.toSet());
+        mountainSet.stream().forEach(System.out::println);
+        return null;
     }
 
 }

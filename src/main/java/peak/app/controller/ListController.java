@@ -2,6 +2,7 @@ package peak.app.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import peak.app.Constants;
+import peak.app.common.AuthenticationFacade;
 import peak.app.model.HikeList;
 import peak.app.model.Mountain;
 import peak.app.model.MountainList;
 import peak.app.service.ListService;
+import peak.app.service.UserHikeService;
 import peak.app.view.ListView;
 import peak.app.view.MountainListView;
 import peak.app.view.MountainView;
@@ -25,6 +28,12 @@ public class ListController {
     
     @Autowired
     ListService listService;
+
+    @Autowired
+    UserHikeService hikeService;
+
+    @Autowired
+    private AuthenticationFacade authenticationFacade;
 
     private final Logger logger = LoggerFactory.getLogger(ListController.class);
     
@@ -63,5 +72,26 @@ public class ListController {
         }
         
         return "list";
+    }
+
+    @RequestMapping("/list/user")
+    public String showUserList(@RequestParam(value = "name") String name, @RequestParam(value = "type") String type,
+            Model model)
+    {
+        logger.info("Handling a request to show user list: " + name + " type: " + type);
+        String userName = authenticationFacade.getAuthentication().getName();
+        if (Constants.LIST_TYPE_MOUNTAIN.equals(type))
+        {
+            MountainList mList = listService.getMountainList(name);
+            Set<Mountain> mountainSet = hikeService.getMountainsHiked(userName);
+            for (Mountain mountain : mList.getMountains())
+            {
+                if (mountainSet.contains(mountain))
+                {
+
+                }
+            }
+        }
+        return "mylist";
     }
 }

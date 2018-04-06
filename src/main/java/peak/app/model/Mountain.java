@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "MOUNTAINS")
-public class Mountain {
+public class Mountain implements Comparable<Mountain> {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
@@ -62,5 +62,27 @@ public class Mountain {
     public void setElevation(int elevation)
     {
         this.elevation = elevation;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Mountain Name: " + name + " Elevation: " + elevation;
+    }
+
+    @Override
+    public int compareTo(Mountain mountain)
+    {
+        return mountain.elevation - this.elevation;
+    }
+
+    @Override
+    public boolean equals(Object mountain)
+    {
+        if (mountain != null && mountain instanceof Mountain)
+            if (((Mountain) mountain).getName().equals(this.getName())
+                    && ((Mountain) mountain).getElevation() == this.getElevation())
+                return true;
+        return false;
     }
 }
