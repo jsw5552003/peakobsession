@@ -1,9 +1,10 @@
 package peak.app.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -53,13 +54,46 @@ public class UserHikeService {
     	hikeRepository.save(hike);
     }
 
-    public Set<Mountain> getMountainsHiked(String userString)
+    public Map<Mountain, LocalDate> getMountainsHiked(String userString)
     {
+        logger.info("Get mountains hiked for user: " + userString);
         List<UserHike> hikeList = getAllHikes(userString);
-        Set<Mountain> mountainSet = hikeList.stream().map(UserHike::getMountains).flatMap(List::stream)
-                .collect(Collectors.toSet());
-        mountainSet.stream().forEach(System.out::println);
-        return null;
+        HashMap<Mountain, LocalDate> mountainsHiked = new HashMap<>();
+        for (UserHike hike : hikeList)
+        {
+            for (Mountain mountain : hike.getMountains())
+            {
+                if (!mountainsHiked.containsKey(mountain))
+                {
+                    mountainsHiked.put(mountain, hike.getDate());
+                }
+            }
+        }
+        logger.info("Found mountains: " + mountainsHiked.size());
+
+        return mountainsHiked;
+    }
+
+    public Map<Mountain, LocalDate>[] getMountainsHikedByMonth(String userString)
+    {
+        logger.info("Get mountains hiked by month for user: " + userString);
+        Map<Mountain, LocalDate>[] returnArray = new HashMap[12];
+        for (int i = 0; i < returnArray.length; i++)
+            returnArray[i] = new HashMap<Mountain, LocalDate>();
+
+        List<UserHike> hikeList = getAllHikes(userString);
+        for (UserHike hike : hikeList)
+        {
+            int hikeMonth = hike.getDate().getMonthValue() - 1;
+            for (Mountain mountain : hike.getMountains())
+            {
+                if (!returnArray[hikeMonth].containsKey(mountain))
+                {
+                    returnArray[hikeMonth].put(mountain, hike.getDate());
+                }
+            }
+        }
+        return returnArray;
     }
 
 }

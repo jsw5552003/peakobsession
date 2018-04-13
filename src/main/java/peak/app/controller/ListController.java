@@ -1,8 +1,9 @@
 package peak.app.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,9 @@ import peak.app.service.UserHikeService;
 import peak.app.view.ListView;
 import peak.app.view.MountainListView;
 import peak.app.view.MountainView;
+import peak.app.view.UserMountainGridView;
+import peak.app.view.UserMountainListView;
+import peak.app.view.UserMountainView;
 
 @Controller
 public class ListController {
@@ -83,15 +87,43 @@ public class ListController {
         if (Constants.LIST_TYPE_MOUNTAIN.equals(type))
         {
             MountainList mList = listService.getMountainList(name);
-            Set<Mountain> mountainSet = hikeService.getMountainsHiked(userName);
+            UserMountainListView returnList = new UserMountainListView();
+            returnList.setDescription(mList.getDescription());
+            returnList.setName(mList.getName());
+            returnList.setType(Constants.LIST_TYPE_MOUNTAIN);
+            Map<Mountain, LocalDate> mountainMap = hikeService.getMountainsHiked(userName);
             for (Mountain mountain : mList.getMountains())
-            {
-                if (mountainSet.contains(mountain))
+            {               
+                if (mountainMap.containsKey(mountain))
                 {
-
+                     returnList.addMountain(new UserMountainView(mountain.getName(), mountain.getElevation(), 
+                             mountainMap.get(mountain).toString(), true));
+                }
+                else
+                {
+                    returnList.addMountain(new UserMountainView(mountain.getName(), mountain.getElevation(), 
+                             null, false));
                 }
             }
+            logger.info("Adding a list of size: "
+                    + (returnList.getMountains() == null ? 0 : returnList.getMountains().size()));
+            model.addAttribute("list", returnList);
         }
         return "mylist";
+    }
+
+    @RequestMapping("/list/grid/user")
+    public String showUserGrid(@RequestParam(value = "name") String name, @RequestParam(value = "type") String type,
+            Model model)
+    {
+        logger.info("Handling a request to show user list: " + name + " type: " + type);
+        String userName = authenticationFacade.getAuthentication().getName();
+        UserMountainGridView gridView = new UserMountainGridView();
+        if (Constants.LIST_TYPE_MOUNTAIN.equals(type))
+        {
+            MountainList mList = listService.getMountainList(name);
+        }
+        model.addAttribute("grid", gridView);
+        return "mygrid";
     }
 }

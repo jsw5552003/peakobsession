@@ -14,6 +14,7 @@
   ('Carter Dome', '4832'),
   ('Moosilauke', '4802'),
   ('Carter Dome', '4780'),
+  ('Mansfield', '4395')
   ; 
   
  INSERT INTO USERS (id, first_name, last_name, email, password, user_name) VALUES (1, 'John', 'Wilson', 'jwilson@worcester.edu', 'password', 'Grizzly');
@@ -28,4 +29,5 @@
  ('NH48', 'The highest 48 peaks in New Hampshire.'), 
  ('NE67', 'The highest 67 peaks in New England.');
  
- INSERT INTO MOUNTAIN_LISTS_MOUNTAINS VALUES (1, 1), (1, 2), (1,3);
+ INSERT INTO MOUNTAIN_LISTS_MOUNTAINS VALUES (1, 1), (1, 2), (1,3), (1, 4), (1,5),
+ (1,6), (2, 1), (2, 2), (2,3), (2, 4), (2,12) ;

@@ -32,6 +32,11 @@ public class ListView {
         return Constants.LIST_TYPE_MOUNTAIN;
     }
     
+    public void setType(String type)
+    {
+        this.type = type;
+    }
+
     public boolean isMountainList()
     {
         return Constants.LIST_TYPE_MOUNTAIN.equals(getType());

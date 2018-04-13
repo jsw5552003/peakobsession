@@ -18,3 +18,27 @@
 		</table>
 	</div>
 </div>
+<div class="row" th:fragment="usermountainlist">
+    <div class="col">
+        <table id="listTable" class="table">
+            <thead>
+                <tr>
+                    <th>Number</th>
+                    <th>Mountain</th>
+                    <th>Elevation</th>
+                    <th>Completed</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="mountain, iterStat : ${list.mountains}">
+                    <td th:text="${iterStat.count}"></td>
+                    <td th:text="${mountain.name}"></td>
+                    <td th:text="${mountain.elevation}"></td>
+                    <td><span th:if="${mountain.completed}">X</span></td>
+                    <td th:text="${mountain.date}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
