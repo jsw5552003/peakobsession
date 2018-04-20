@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <div th:replace="fragments/header :: header"></div>
+</head>
+<body>
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+    <div class="container">
+        <div class="row pt-3">
+            <div class="col">
+             <div class="alert alert-primary">
+                <h2>Grid View</h2>
+                <h2 th:text="${grid[0].name}"></h2>
+                <h4 th:text="${grid[0].description}"></h4>
+             </div>
+            </div>
+        </div>
+       <div th:if="${grid[0].isMountainType()}" th:replace="fragments/mountaingrid :: mountaingrid"></div>
+    </div>
+</body>
+</html>

@@ -67,6 +67,13 @@ public class UserHikeService {
                 {
                     mountainsHiked.put(mountain, hike.getDate());
                 }
+                else
+                {
+                    if (mountainsHiked.get(mountain).isAfter(hike.getDate()))
+                    {
+                        mountainsHiked.put(mountain, hike.getDate());
+                    }
+                }
             }
         }
         logger.info("Found mountains: " + mountainsHiked.size());

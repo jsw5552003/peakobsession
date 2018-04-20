@@ -23,7 +23,6 @@ import peak.app.service.UserHikeService;
 import peak.app.view.ListView;
 import peak.app.view.MountainListView;
 import peak.app.view.MountainView;
-import peak.app.view.UserMountainGridView;
 import peak.app.view.UserMountainListView;
 import peak.app.view.UserMountainView;
 
@@ -92,19 +91,7 @@ public class ListController {
             returnList.setName(mList.getName());
             returnList.setType(Constants.LIST_TYPE_MOUNTAIN);
             Map<Mountain, LocalDate> mountainMap = hikeService.getMountainsHiked(userName);
-            for (Mountain mountain : mList.getMountains())
-            {               
-                if (mountainMap.containsKey(mountain))
-                {
-                     returnList.addMountain(new UserMountainView(mountain.getName(), mountain.getElevation(), 
-                             mountainMap.get(mountain).toString(), true));
-                }
-                else
-                {
-                    returnList.addMountain(new UserMountainView(mountain.getName(), mountain.getElevation(), 
-                             null, false));
-                }
-            }
+            checkList(mountainMap, mList, returnList);
             logger.info("Adding a list of size: "
                     + (returnList.getMountains() == null ? 0 : returnList.getMountains().size()));
             model.addAttribute("list", returnList);
@@ -118,12 +105,44 @@ public class ListController {
     {
         logger.info("Handling a request to show user list: " + name + " type: " + type);
         String userName = authenticationFacade.getAuthentication().getName();
-        UserMountainGridView gridView = new UserMountainGridView();
+        UserMountainListView[] gridView = new UserMountainListView[12];
         if (Constants.LIST_TYPE_MOUNTAIN.equals(type))
         {
+            Map<Mountain, LocalDate>[] hikesByMonth = hikeService.getMountainsHikedByMonth(userName);
             MountainList mList = listService.getMountainList(name);
+            for (int i = 0; i < gridView.length; i++)
+            {
+                gridView[i] = new UserMountainListView();
+                checkList(hikesByMonth[i], mList, gridView[i]);
+            }
+            gridView[0].setName(mList.getName());
+            gridView[0].setDescription(mList.getDescription());
+            gridView[0].setType(type);
+        }
+        for (int i = 0; i < gridView.length; i++)
+        {
+          
+            if(gridView[i].getMountains() != null)
+            {
+                logger.info("Number of Mountians in grid view " + i + " :" + gridView[i].getMountains().size());
+            }
         }
         model.addAttribute("grid", gridView);
         return "mygrid";
+    }
+
+    private void checkList(Map<Mountain, LocalDate> mountainMap, MountainList mList, UserMountainListView checkList)
+    {
+        for (Mountain mountain : mList.getMountains())
+        {
+            if (mountainMap.containsKey(mountain))
+            {
+                checkList.addMountain(new UserMountainView(mountain.getName(), mountain.getElevation(),
+                        mountainMap.get(mountain).toString(), true));
+            } else
+            {
+                checkList.addMountain(new UserMountainView(mountain.getName(), mountain.getElevation(), null, false));
+            }
+        }
     }
 }

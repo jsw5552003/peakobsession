@@ -1,0 +1,29 @@
+<div class="row" th:fragment="mountaingrid">
+    <div class="col">
+        <table id="gridTable" class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>January</th>
+                    <th>February</th>
+                    <th>March</th>
+                    <th>April</th>
+                    <th>May</th>
+                    <th>June</th>
+                    <th>July</th>
+                    <th>August</th>
+                    <th>September</th>
+                    <th>October</th>
+                    <th>November</th>
+                    <th>December</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="list : ${grid[0].getMountains().size()}">
+                    <td>blah</td>
+                </tr>
+            </tbody>
+            
+        </table>
+    </div>
+</div>
