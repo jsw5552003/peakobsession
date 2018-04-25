@@ -103,7 +103,7 @@ public class ListController {
     public String showUserGrid(@RequestParam(value = "name") String name, @RequestParam(value = "type") String type,
             Model model)
     {
-        logger.info("Handling a request to show user list: " + name + " type: " + type);
+        logger.info("Handling a request to show user grid: " + name + " type: " + type);
         String userName = authenticationFacade.getAuthentication().getName();
         UserMountainListView[] gridView = new UserMountainListView[12];
         if (Constants.LIST_TYPE_MOUNTAIN.equals(type))
@@ -125,6 +125,11 @@ public class ListController {
             if(gridView[i].getMountains() != null)
             {
                 logger.info("Number of Mountians in grid view " + i + " :" + gridView[i].getMountains().size());
+                for (UserMountainView mView : gridView[i].getMountains())
+                {
+                    if (mView.isCompleted())
+                        logger.info("Completed: " + mView.getName() + "Year: " + mView.getYear());
+                }
             }
         }
         model.addAttribute("grid", gridView);

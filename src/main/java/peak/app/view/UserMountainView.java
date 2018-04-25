@@ -35,7 +35,7 @@ public class UserMountainView extends MountainView {
     public String getYear()
     {
         if (date != null && date.length() > 4)
-            return date.substring(date.length() - 4);
+            return date.substring(0, 4);
         else
             return "";
     }
