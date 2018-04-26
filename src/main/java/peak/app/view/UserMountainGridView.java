@@ -1,27 +1,43 @@
 package peak.app.view;
 
-public class UserMountainGridView extends UserMountainListView {
+public class UserMountainGridView {
+	
+	UserMountainListView [] grid;
+	
+	int [] mountainTotals;
+	
+	int [] monthTotals;
+	
+	public UserMountainGridView(UserMountainListView[] inputGrid)
+	{
+		this.grid = inputGrid;
+		this.monthTotals = new int[12];
+		this.mountainTotals = new int[grid[0].getMountains().size()];
+		
+		for(int i = 0; i < grid.length; i++ )
+		{
+			for(int j = 0; j < grid[i].getMountains().size(); j++)
+			{
+				if(grid[i].getMountains().get(j).isCompleted())
+				{
+					mountainTotals[j]++;
+					monthTotals[i]++;
+				}
+			}
+		}
+	}
 
-    private String[][] grid;
+	public UserMountainListView[] getGrid() {
+		return grid;
+	}
 
-    public String[][] getGrid()
-    {
-        return grid;
-    }
+	public int[] getMountainTotals() {
+		return mountainTotals;
+	}
 
-    public void setGrid(String[][] grid)
-    {
-        this.grid = grid;
-    }
+	public int[] getMonthTotals() {
+		return monthTotals;
+	}
 
-    public String getComplete(int x, int y)
-    {
-        return grid[x][y];
-    }
-
-    public void setComplete(int x, int y, String year)
-    {
-        grid[x][y] = year;
-    }
-
+ 
 }

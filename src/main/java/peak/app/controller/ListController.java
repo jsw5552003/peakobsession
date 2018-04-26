@@ -23,6 +23,7 @@ import peak.app.service.UserHikeService;
 import peak.app.view.ListView;
 import peak.app.view.MountainListView;
 import peak.app.view.MountainView;
+import peak.app.view.UserMountainGridView;
 import peak.app.view.UserMountainListView;
 import peak.app.view.UserMountainView;
 
@@ -105,33 +106,34 @@ public class ListController {
     {
         logger.info("Handling a request to show user grid: " + name + " type: " + type);
         String userName = authenticationFacade.getAuthentication().getName();
-        UserMountainListView[] gridView = new UserMountainListView[12];
+        UserMountainListView[] viewArray = new UserMountainListView[12];
         if (Constants.LIST_TYPE_MOUNTAIN.equals(type))
         {
             Map<Mountain, LocalDate>[] hikesByMonth = hikeService.getMountainsHikedByMonth(userName);
             MountainList mList = listService.getMountainList(name);
-            for (int i = 0; i < gridView.length; i++)
+            for (int i = 0; i < viewArray.length; i++)
             {
-                gridView[i] = new UserMountainListView();
-                checkList(hikesByMonth[i], mList, gridView[i]);
+            	viewArray[i] = new UserMountainListView();
+                checkList(hikesByMonth[i], mList, viewArray[i]);
             }
-            gridView[0].setName(mList.getName());
-            gridView[0].setDescription(mList.getDescription());
-            gridView[0].setType(type);
+            viewArray[0].setName(mList.getName());
+            viewArray[0].setDescription(mList.getDescription());
+            viewArray[0].setType(type);
         }
-        for (int i = 0; i < gridView.length; i++)
+        for (int i = 0; i < viewArray.length; i++)
         {
           
-            if(gridView[i].getMountains() != null)
+            if(viewArray[i].getMountains() != null)
             {
-                logger.info("Number of Mountians in grid view " + i + " :" + gridView[i].getMountains().size());
-                for (UserMountainView mView : gridView[i].getMountains())
+                logger.info("Number of Mountians in grid view " + i + " :" + viewArray[i].getMountains().size());
+                for (UserMountainView mView : viewArray[i].getMountains())
                 {
                     if (mView.isCompleted())
                         logger.info("Completed: " + mView.getName() + "Year: " + mView.getYear());
                 }
             }
         }
+        UserMountainGridView gridView = new UserMountainGridView(viewArray);
         model.addAttribute("grid", gridView);
         return "mygrid";
     }

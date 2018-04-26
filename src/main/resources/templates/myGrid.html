@@ -10,12 +10,12 @@
             <div class="col">
              <div class="alert alert-primary">
                 <h2>Grid View</h2>
-                <h2 th:text="${grid[0].name}"></h2>
-                <h4 th:text="${grid[0].description}"></h4>
+                <h2 th:text="${grid.grid[0].name}"></h2>
+                <h4 th:text="${grid.grid[0].description}"></h4>
              </div>
             </div>
         </div>
-       <div th:if="${grid[0].isMountainType()}" th:replace="fragments/mountaingrid :: mountaingrid"></div>
+       <div th:if="${grid.grid[0].isMountainType()}" th:replace="fragments/mountaingrid :: mountaingrid"></div>
     </div>
 </body>
 </html>

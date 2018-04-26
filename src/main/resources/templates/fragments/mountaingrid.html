@@ -19,11 +19,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="mountain : ${grid[0].getMountains()}">
+                <tr th:each="mountain : ${grid.getGrid()[0].getMountains()}">
                     <td th:text="${mountain.name}"></td>
-                    <td th:each="list : ${grid}" th:text="${grid[listStat.index].getMountains().get(mountainStat.index).year}"></td>
+                    <td th:each="list : ${grid.grid}" th:text="${grid.getGrid()[listStat.index].getMountains().get(mountainStat.index).year}"></td>
                 </tr>
             </tbody>
+            <tfoot>
+            	<tr>
+            		<td></td>
+            		<td th:each="month : ${grid.monthTotals}" th:text="${month}"></td>
+           		</tr>
+         	</tfoot>
             
         </table>
     </div>
