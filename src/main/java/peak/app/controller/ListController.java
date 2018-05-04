@@ -120,6 +120,7 @@ public class ListController {
             viewArray[0].setDescription(mList.getDescription());
             viewArray[0].setType(type);
         }
+        // log the results
         for (int i = 0; i < viewArray.length; i++)
         {
           

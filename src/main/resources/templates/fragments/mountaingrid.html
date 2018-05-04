@@ -1,36 +1,93 @@
-<div class="row" th:fragment="mountaingrid">
-    <div class="col">
-        <table id="gridTable" class="table">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>January</th>
-                    <th>February</th>
-                    <th>March</th>
-                    <th>April</th>
-                    <th>May</th>
-                    <th>June</th>
-                    <th>July</th>
-                    <th>August</th>
-                    <th>September</th>
-                    <th>October</th>
-                    <th>November</th>
-                    <th>December</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="mountain : ${grid.getGrid()[0].getMountains()}">
-                    <td th:text="${mountain.name}"></td>
-                    <td th:each="list : ${grid.grid}" th:text="${grid.getGrid()[listStat.index].getMountains().get(mountainStat.index).year}"></td>
-                </tr>
-            </tbody>
-            <tfoot>
-            	<tr>
-            		<td></td>
-            		<td th:each="month : ${grid.monthTotals}" th:text="${month}"></td>
-           		</tr>
-         	</tfoot>
-            
-        </table>
-    </div>
+<div th:fragment="mountaingrid">
+	<div class="row">
+		<div class="col">
+			<table id="gridTable" class="table table-bordered">
+				<thead>
+					<tr>
+						<th></th>
+						<th>January</th>
+						<th>February</th>
+						<th>March</th>
+						<th>April</th>
+						<th>May</th>
+						<th>June</th>
+						<th>July</th>
+						<th>August</th>
+						<th>September</th>
+						<th>October</th>
+						<th>November</th>
+						<th>December</th>
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="mountain : ${grid.getGrid()[0].getMountains()}">
+						<td th:text="${mountain.name}"></td>
+						<td th:each="list : ${grid.grid}"
+							th:text="${grid.getGrid()[listStat.index].getMountains().get(mountainStat.index).year}"></td>
+						<td th:text="${grid.mountainTotals[mountainStat.index]}"></td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td></td>
+						<td th:each="month : ${grid.monthTotals}" th:text="${month}"></td>
+						<td></td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+	   <div class="col-sm">
+	       <table id="gridYearTable" class="table">
+	           <thead>
+	               <tr>
+	                   <th>Year</th>
+	                   <th>Number</th>
+	               </tr>
+	           </thead>
+	           <tbody>
+	           <tr th:each="year : ${grid.yearTotals}">
+	               <td th:text="${year.key}"></td>
+	               <td th:text="${year.value}"></td>
+	           </tr>
+	           </tbody>
+	       </table>
+	   </div>
+	   <div class="col-sm">
+           <table id="gridRoundTable" class="table">
+               <thead>
+                   <tr>
+                       <th>Round</th>
+                       <th>Number</th>
+                   </tr>
+               </thead>
+               <tbody>
+               <tr th:each="round : ${grid.roundTotals}">
+                   <td th:text="${roundStat.index}"></td>
+                   <td class="text-center" th:text="${round}"></td>
+               </tr>
+               </tbody>
+           </table>
+       </div>
+       <div class="col-sm">
+         <table id="gridPercentageTable" class="table">
+               <thead>
+                   <tr>
+                       <th>Hiked</th>
+                       <th>Needed</th>
+                       <th>Percentage</th>
+                   </tr>
+               </thead>
+               <tbody>
+               <tr>
+                   <td th:text="${grid.totalComplete}"></td>
+                   <td th:text="${grid.totalNeeded}"></td>
+                   <td th:text="${grid.percentComplete} + '%'"></td>
+               </tr>
+               </tbody>
+           </table>     
+       </div>
+	</div>
 </div>

@@ -61,3 +61,15 @@ CREATE TABLE MOUNTAIN_LISTS_MOUNTAINS (
   MOUNTAIN_ID BIGINT,
   foreign key (MOUNTAIN_LIST_ID ) references mountain_lists(ID),
   foreign key (MOUNTAIN_ID ) references mountains(ID) );
+  
+DROP TABLE IF EXISTS FEATURES;
+
+CREATE TABLE FEATURES (
+  ID BIGINT PRIMARY KEY auto_increment,
+  foreign key (USER_ID ) references users(ID),
+  ENTERED_DATE DATE,
+  NAME VARCHAR(100),
+  DESCRIPTION TEXT,
+  ACCEPTED TINYINT,
+  COMPLETE TINYINT
+  );

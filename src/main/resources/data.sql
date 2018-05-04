@@ -13,7 +13,29 @@
   ('South Twin', '4902'),
   ('Carter Dome', '4832'),
   ('Moosilauke', '4802'),
-  ('Carter Dome', '4780'),
+  ('Eisenhower', '4780'),
+  ('North Twin', '4761'),
+  ('Carrigain', '4700'),
+  ('Bond', '4698'),
+  ('Middle Carter', '4610'),
+  ('West Bond', '4540'),
+  ('Garfield', '4500'),
+  ('Liberty', '4459'),
+  ('South Carter', '4430'),
+  ('Wildcat, A peak', '4422'),
+  ('Hancock', '4420'),
+  ('South Kinsman', '4358'),
+  ('Field', '4340'),
+  ('Osceola', '4340'),
+  ('Flume', '4328'),
+  ('South Hancock', '4319'),
+  ('Pierce', '4310'),
+  ('North Kinsman', '4293'),
+  ('Willey', '4285'),
+  ('Bondcliff', '4265'),
+  ('Zealand', '4260'),
+  ('North Tripyramid', '4180'),
+  ('Cabot', '4170'),
   ('Mansfield', '4395')
   ; 
   
@@ -30,4 +52,6 @@
  ('NE67', 'The highest 67 peaks in New England.');
  
  INSERT INTO MOUNTAIN_LISTS_MOUNTAINS VALUES (1, 1), (1, 2), (1,3), (1, 4), (1,5),
- (1,6), (2, 1), (2, 2), (2,3), (2, 4), (2,12) ;
+ (1,6), (1,7), (1,8), (1,9), (1,10), (1,11), (1,12), (1,13), (1,14), (1,15), (1,16), 
+ (1,17), (1,18), (1,19), (1,20), (1,21), (1,22), (1,23), (1,24), (1,25), (1,26),
+ (2, 1), (2, 2), (2,3), (2, 4), (2,12) ;
