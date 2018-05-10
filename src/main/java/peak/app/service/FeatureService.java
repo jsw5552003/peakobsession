@@ -33,4 +33,5 @@ public class FeatureService {
         logger.info("Adding a feature with name: " + feature.getName());
         featureRepository.save(feature);
     }
+
 }
