@@ -2,21 +2,23 @@ package peak.app.view;
 
 public class FeatureView {
 
-    String name;
+    private String name;
 
-    String username;
+    private String username;
 
-    String description;
+    private String description;
 
-    int numVotes;
+    private int numVotes;
 
-    String acceptedDate;
+    private String acceptedDate;
 
-    String createdDate;
+    private String createdDate;
 
-    String completedDate;
+    private String completedDate;
 
-    boolean userVoted;
+    private boolean userVoted;
+
+    private long id;
 
     public FeatureView()
     {
@@ -109,6 +111,16 @@ public class FeatureView {
     public void setUsername(String username)
     {
         this.username = username;
+    }
+
+    public long getId()
+    {
+        return id;
+    }
+
+    public void setId(long id)
+    {
+        this.id = id;
     }
 
 }

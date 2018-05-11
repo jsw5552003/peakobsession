@@ -50,8 +50,9 @@
                             <hr/>
                             <h6 th:text="${feature.description}"></h6>
                             <br/>
-                            <span th:text="'Votes: ' + ${feature.numVotes}"></span>
-                            <button id="voteButton" type="button" class="btn btn-outline-success btn-sm">Vote</button>
+                            <span id="voteSpan" th:text="'Votes: ' + ${feature.numVotes}"></span>
+                            <button id="voteButton" type="button" class="btn btn-outline-success btn-sm" data-feature="1">Vote</button>
+                            <span id="voteError" class="text-danger"></span>
                             <span class="float-right" th:text="'Suggested By: ' + ${feature.username}"></span>
                        </div>   
 				    </div>
@@ -68,25 +69,24 @@
     
     <script>
     
-    $(document).ready(function(){
-    	alert('page loaded, domain:' + document.location.host);
-    });
-    
-    $('#voteButton').click(function(event) { alert('click')});
+    $('#voteButton').click(function(event) {  
+    	ajaxVote();
+    	});
     
         function ajaxVote() {
-            
+        	
             $.ajax({
                 type : "POST",
                 contentType : "application/json",
-                url : "${home}search/api/getSearchResult",
+                url : "/features/vote",
+                data : $("#voteButton").attr("data-feature"),
                 success : function(data) {
-                    console.log("SUCCESS: ", data);
-                    display(data);
+                    $('#voteSpan').html(data);
+                    $('#voteError').html('');
                 },
                 error : function(e) {
                     console.log("ERROR: ", e);
-                    display(e);
+                    $('#voteError').html(' VOTE ERROR, PLEASE TRY AGAIN');
                 }
             });
         }
