@@ -10,6 +10,10 @@ public class FeatureView {
 
     private int numVotes;
 
+    private boolean accepted;
+
+    private boolean completed;
+
     private String acceptedDate;
 
     private String createdDate;
@@ -121,6 +125,26 @@ public class FeatureView {
     public void setId(long id)
     {
         this.id = id;
+    }
+
+    public boolean isAccepted()
+    {
+        return accepted;
+    }
+
+    public void setAccepted(boolean accepted)
+    {
+        this.accepted = accepted;
+    }
+
+    public boolean isCompleted()
+    {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed)
+    {
+        this.completed = completed;
     }
 
 }

@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import peak.app.Constants;
+
 @Entity
 @Table(name = "ROLES")
 public class Role {
@@ -47,5 +49,9 @@ public class Role {
         this.name = name;
     }
     
+    public boolean isAdmin()
+    {
+        return Constants.ROLE_ADMIN.equals(this.name);
+    }
 
 }

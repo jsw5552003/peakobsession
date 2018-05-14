@@ -126,11 +126,51 @@ public class User {
         this.roles = roles;
     }
 
+    public boolean isAdmin()
+    {
+        if (roles == null || roles.size() == 0)
+        {
+            return false;
+        } else
+        {
+            for (Role role : roles)
+            {
+                if (role.isAdmin())
+                    return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString()
     {
         return "User [firstName=" + firstName + ", lastName=" + lastName + ", userName=" + userName + ", email=" + email
                 + "]";
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (int) (id ^ (id >>> 32));
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        User other = (User) obj;
+        if (id != other.id)
+            return false;
+        return true;
     }
     
     

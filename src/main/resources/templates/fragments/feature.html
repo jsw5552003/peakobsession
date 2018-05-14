@@ -1,0 +1,24 @@
+<div class="alert alert-primary" th:fragment="feature">
+    <span class="float-right" th:text="${feature.createdDate}"></span>
+    <h3 th:text="${feature.name}"></h3>
+    <hr/>
+    <h6 th:text="${feature.description}"></h6>
+    <br/>
+    <span th:attr="id='voteSpan' + ${feature.id}" th:text="'Votes: ' + ${feature.numVotes}"></span>
+    <button th:attr="id='voteButton' + ${feature.id}, data-feature=${feature.id}" type="button" 
+        class="btn btn-outline-success btn-sm ml-1" data-url="vote" th:disabled="${feature.userVoted}">Vote</button>
+    <span th:attr="id='voteError' + ${feature.id}" class="text-danger"></span>
+    <form th:if="${admin and feature.completed or feature.accepted}" class="d-inline" action="/features/status/suggest" method="POST">
+      <input type="hidden" name="feature" th:attr="value=${feature.id}"/>
+      <button th:attr="data-feature=${feature.id}" class="btn btn-outline-danger btn-sm ml-1">Suggest</button>
+    </form>
+    <form th:if="${admin and not feature.accepted}" class="d-inline" action="/features/status/accept" method="POST">
+      <input type="hidden" name="feature" th:attr="value=${feature.id}"/>
+      <button th:attr="data-feature=${feature.id}" class="btn btn-outline-danger btn-sm ml-1">Accept</button>
+    </form>
+    <form th:if="${admin and not feature.completed}" class="d-inline" action="/features/status/complete" method="POST">
+      <input type="hidden" name="feature" th:attr="value=${feature.id}"/>
+      <button th:attr="data-feature=${feature.id}" class="btn btn-outline-danger btn-sm ml-1">Complete</button>
+    </form>
+    <span class="float-right" th:text="'Suggested By: ' + ${feature.username}"></span>
+</div>

@@ -39,13 +39,16 @@
   ('Mansfield', '4395')
   ; 
   
- INSERT INTO USERS (id, first_name, last_name, email, password, user_name) VALUES (1, 'John', 'Wilson', 'jwilson@worcester.edu', 'password', 'Grizzly');
+ INSERT INTO USERS (id, first_name, last_name, email, password, user_name) VALUES 
+   (1, 'John', 'Wilson', 'jwilson@worcester.edu', 'password', 'Grizzly'),
+   (2, 'Boring', 'User', 'a@b.com', 'password', 'User');
   
  INSERT INTO ROLES (id, name) VALUES (1, 'ROLE_ADMIN');
  INSERT INTO ROLES (id, name) VALUES (2, 'ROLE_USER');
  
  INSERT INTO users_roles (user_id, role_id) VALUES (1, 1);
  INSERT INTO users_roles (user_id, role_id) VALUES (1, 2);
+ INSERT INTO users_roles (user_id, role_id) VALUES (2, 2);
  
  INSERT INTO MOUNTAIN_LISTS (NAME, DESCRIPTION) VALUES 
  ('NH48', 'The highest 48 peaks in New Hampshire.'), 
@@ -59,4 +62,4 @@
  INSERT INTO FEATURES (user_id, entered_date, name, description) VALUES
  (1, DATE '2015-12-17','Test Feature', 'Test Descriptioin');
  
- INSERT INTO FEATURE_VOTES VALUES (1,1);
+ INSERT INTO FEATURE_VOTES VALUES (1,1,1);

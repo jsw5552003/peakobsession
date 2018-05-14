@@ -1,5 +1,6 @@
 package peak.app.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class FeatureController {
         logger.info("Handling a request to go to features page.");
         List<Feature> features = featureService.getAllFeatures();
         String userName = authenticationFacade.getAuthentication().getName();
-        User user = userRepository.findByEmail(userName);
+        User user = userRepository.findByUserName(userName);
         List<FeatureView> suggested = new ArrayList<>();
         List<FeatureView> accepted = new ArrayList<>();
         List<FeatureView> completed = new ArrayList<>();
@@ -58,12 +59,14 @@ public class FeatureController {
             featureView.setCreatedDate(feature.getDateEntered().toString());
             featureView.setUsername(feature.getUser().getUserName());
             featureView.setId(feature.getId());
-            if (feature.isAccepted())
-            {
-                accepted.add(featureView);
-            } else if (feature.isComplete())
+            featureView.setAccepted(feature.isAccepted());
+            featureView.setCompleted(feature.isComplete());
+            if (feature.isComplete())
             {
                 completed.add(featureView);
+            } else if (feature.isAccepted())
+            {
+                accepted.add(featureView);
             } else
             {
                 suggested.add(featureView);
@@ -72,6 +75,7 @@ public class FeatureController {
         model.addAttribute("suggested", suggested);
         model.addAttribute("accepted", accepted);
         model.addAttribute("completed", completed);
+        model.addAttribute("admin", user.isAdmin());
         return "features";
     }
 
@@ -103,8 +107,49 @@ public class FeatureController {
     public String voteFeature(@RequestBody String feature)
     {
         logger.info("Handling a request to vote for a feature.");
+        long featureId = Long.parseLong(feature);
         String userName = authenticationFacade.getAuthentication().getName();
-        logger.info("Adding a feature for user: " + userName + " and feature:" + feature);
-        return "Votes: 777";
+        User user = userRepository.findByUserName(userName);
+        logger.info("Voting for a feature for user: " + userName + " and feature:" + featureId);
+        featureService.voteForFeature(user.getId(), featureId);
+        return "Votes: " + featureService.getNumberFeatureVotes(featureId);
     }
+
+    @RequestMapping(value = "/features/status/accept")
+    public String acceptFeature(@RequestParam(value = "feature") String featureInput)
+    {
+        logger.info("Handling a request to move feature status to accepted.");
+        long featureId = Long.parseLong(featureInput);
+        Feature feature = featureService.getFeature(featureId);
+        feature.setDateAccepted(LocalDate.now());
+        feature.setAccepted(true);
+        feature.setComplete(false);
+        featureService.saveFeature(feature);
+        return "redirect:/features";
+    }
+
+    @RequestMapping(value = "/features/status/complete")
+    public String completeFeature(@RequestParam(value = "feature") String featureInput)
+    {
+        logger.info("Handling a request move feature status to complete.");
+        long featureId = Long.parseLong(featureInput);
+        Feature feature = featureService.getFeature(featureId);
+        feature.setDateCompleted(LocalDate.now());
+        feature.setComplete(true);
+        featureService.saveFeature(feature);
+        return "redirect:/features";
+    }
+
+    @RequestMapping(value = "/features/status/suggest")
+    public String suggestFeature(@RequestParam(value = "feature") String featureInput)
+    {
+        logger.info("Handling a request to move feature status to suggest.");
+        long featureId = Long.parseLong(featureInput);
+        Feature feature = featureService.getFeature(featureId);
+        feature.setAccepted(false);
+        feature.setComplete(false);
+        featureService.saveFeature(feature);
+        return "redirect:/features";
+    }
+
 }
