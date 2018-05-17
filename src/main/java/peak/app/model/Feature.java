@@ -41,7 +41,7 @@ public class Feature {
     @Column(columnDefinition = "tinyint default false")
     boolean accepted;
     @Column(columnDefinition = "tinyint default false")
-    boolean complete;
+    boolean completed;
 
     @ManyToMany
     @JoinTable(name = "FEATURE_VOTES", joinColumns = @JoinColumn(name = "FEATURE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
@@ -57,7 +57,7 @@ public class Feature {
         this.description = description;
         dateEntered = LocalDate.now();
         accepted = false;
-        complete = false;
+        completed = false;
     }
 
     public int getNumberVotes()
@@ -111,14 +111,14 @@ public class Feature {
         this.accepted = accepted;
     }
 
-    public boolean isComplete()
+    public boolean isCompleted()
     {
-        return complete;
+        return completed;
     }
 
-    public void setComplete(boolean complete)
+    public void setCompleted(boolean completed)
     {
-        this.complete = complete;
+        this.completed = completed;
     }
 
     public LocalDate getDateAccepted()
@@ -166,7 +166,7 @@ public class Feature {
     {
         return "Feature [dateEntered=" + dateEntered + ", dateAccepted=" + dateAccepted + ", dateCompleted="
                 + dateCompleted + ", user=" + user + ", name=" + name + ", description=" + description + ", accepted="
-                + accepted + ", complete=" + complete + ", users=" + users + "]";
+                + accepted + ", completed=" + completed + ", users=" + users + "]";
     }
 
 }

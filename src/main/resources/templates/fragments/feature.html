@@ -1,5 +1,7 @@
 <div class="alert alert-primary" th:fragment="feature">
-    <span class="float-right" th:text="${feature.createdDate}"></span>
+    <span class="float-right" th:text="'Created: ' + ${feature.createdDate}"></span>
+    <br/><span th:if="${feature.accepted}" class="float-right" th:text="'Accepted: ' + ${feature.acceptedDate}"></span>
+    <br/><span th:if="${feature.completed}" class="float-right" th:text="'Completed: ' + ${feature.completedDate}"></span>
     <h3 th:text="${feature.name}"></h3>
     <hr/>
     <h6 th:text="${feature.description}"></h6>

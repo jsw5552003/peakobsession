@@ -56,12 +56,16 @@ public class FeatureController {
             featureView.setDescription(feature.getDescription());
             featureView.setNumVotes(feature.getNumberVotes());
             featureView.setUserVoted(feature.hasUserVoted(user));
-            featureView.setCreatedDate(feature.getDateEntered().toString());
+            featureView.setCreatedDate(feature.getDateEntered() == null ? null : feature.getDateEntered().toString());
+            featureView
+                    .setAcceptedDate(feature.getDateAccepted() == null ? null : feature.getDateAccepted().toString());
+            featureView.setCompletedDate(
+                    feature.getDateCompleted() == null ? null : feature.getDateCompleted().toString());
             featureView.setUsername(feature.getUser().getUserName());
             featureView.setId(feature.getId());
             featureView.setAccepted(feature.isAccepted());
-            featureView.setCompleted(feature.isComplete());
-            if (feature.isComplete())
+            featureView.setCompleted(feature.isCompleted());
+            if (feature.isCompleted())
             {
                 completed.add(featureView);
             } else if (feature.isAccepted())
@@ -123,7 +127,7 @@ public class FeatureController {
         Feature feature = featureService.getFeature(featureId);
         feature.setDateAccepted(LocalDate.now());
         feature.setAccepted(true);
-        feature.setComplete(false);
+        feature.setCompleted(false);
         featureService.saveFeature(feature);
         return "redirect:/features";
     }
@@ -135,7 +139,7 @@ public class FeatureController {
         long featureId = Long.parseLong(featureInput);
         Feature feature = featureService.getFeature(featureId);
         feature.setDateCompleted(LocalDate.now());
-        feature.setComplete(true);
+        feature.setCompleted(true);
         featureService.saveFeature(feature);
         return "redirect:/features";
     }
@@ -147,7 +151,7 @@ public class FeatureController {
         long featureId = Long.parseLong(featureInput);
         Feature feature = featureService.getFeature(featureId);
         feature.setAccepted(false);
-        feature.setComplete(false);
+        feature.setCompleted(false);
         featureService.saveFeature(feature);
         return "redirect:/features";
     }

@@ -59,7 +59,12 @@
  (1,17), (1,18), (1,19), (1,20), (1,21), (1,22), (1,23), (1,24), (1,25), (1,26),
  (2, 1), (2, 2), (2,3), (2, 4), (2,12) ;
  
- INSERT INTO FEATURES (user_id, entered_date, name, description) VALUES
- (1, DATE '2015-12-17','Test Feature', 'Test Descriptioin');
+ INSERT INTO FEATURES (user_id, entered_date, accepted_date, completed_date, name, description, accepted, completed) VALUES
+ (1, DATE '2018-05-16', null, null, 'User Preferences', 'Add user preferences.', 0, 0),
+ (1, DATE '2018-05-16', null, null, 'Input Validation', 'Add input validation to all forms.', 0, 0),
+ (1, DATE '2018-05-16', null, null, 'Icons', 'Find a free icon library and add them to the UI as appropriate.', 0, 0),
+ (1, DATE '2018-05-16', null, null, 'Friend Grid View', 'Show a grid with you and your friend so you know which ones you still have left to hike together.', 0, 0),
+ (1, DATE '2018-03-20', DATE '2018-05-16', null, 'Add Users to Hikes.', 'Add ability to specify who you hiked with.', 1, 0),
+ (1, DATE '2018-03-20', DATE '2018-04-13', DATE '2018-05-04', 'Test Feature', 'Test Descriptioin', 1, 1);
  
  INSERT INTO FEATURE_VOTES VALUES (1,1,1);
