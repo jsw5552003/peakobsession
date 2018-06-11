@@ -1,6 +1,7 @@
 package peak.app.service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -54,6 +55,12 @@ public class UserService implements UserDetailsService {
         logger.debug("User name is unique. Go ahead and create user.");
         userRepository.save(user);
         logger.debug("New user created.");
+    }
+
+    public List<User> getAllUsers()
+    {
+        logger.debug("Get all users");
+        return userRepository.findAll();
     }
 
 }
