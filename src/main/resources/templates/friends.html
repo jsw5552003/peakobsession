@@ -39,9 +39,10 @@
                     </div>
                     <div class="form-group">
                         <label for="user">User</label>
-                        <select class="form-control chosen" id="mountain" name="mountain" multiple="multiple" 
-                        data-placeholder="Select the user (if friend is on the site)" >
-                            <option th:each="user : ${users}" th:attr="value=${user.id}" th:text="${user.name}"></option>
+                        <select class="form-control chosen" id="user" name="user">
+                            <option th:if="${!users.empty}" hidden="hidden">Select the user (if friend is on the site)</option>
+                            <option th:if="${users.empty}">There are no users left for you to choose.</option>
+                            <option th:each="user : ${users}" th:attr="value=${user.id}" th:text="${user.userName}"></option>
                         </select>
                     </div>
                     <div class="form-group pt-3">
@@ -54,6 +55,22 @@
         <div class="row pt-3">
             <div class="col">
                 <h2>Friends List</h2>
+            </div>            
+        </div>
+        <div class="row">
+            <div class="col">
+                <table id="friendsTable" class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Friend</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-warning" th:each="friend : ${friends}">
+                    <td th:text="${friend.name}"></td>
+                  </tr>
+                </tbody>
+                </table>
             </div>
         </div>
     </div>

@@ -1,5 +1,6 @@
 package peak.app.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -26,8 +27,22 @@ public class FriendService {
     public List<Friend> getAllFriends(String userString)
     {
         logger.debug("Get all friends for user: " + userString);
-        User user = userRepository.findByEmail(userString);
+        User user = userRepository.findByUserName(userString);
         return friendRepository.findByUser(user);
+    }
+
+    public void addFriend(Friend friend) {
+        logger.debug("Add Friend with name: " + friend.getName() + " for user: " + friend.getUser().toString());
+        friendRepository.save(friend);
+    }
+
+    public List<Friend> getAllFriends() {
+        logger.debug("Get all friends in the whoooollleee database: ");
+        Iterable<Friend> friendIter = friendRepository.findAll();
+        List<Friend> friendList = new ArrayList<>();
+        friendIter.forEach(friendList::add);
+        logger.debug("Found this many friends: " + (friendList != null ? friendList.size() : 0));
+        return friendList;
     }
 
 }

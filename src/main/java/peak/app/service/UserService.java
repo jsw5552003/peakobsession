@@ -1,6 +1,7 @@
 package peak.app.service;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,7 +47,7 @@ public class UserService implements UserDetailsService {
     
     public void createNewUser(User user) throws AuthenticationException
     {
-        logger.debug("Create New User check to see if email and user name exist");
+        logger.debug("Create New User check to see if email and user name exist.");
         if(userRepository.findByEmail(user.getEmail()) != null)
             throw new UsernameNotFoundException("That email is already in use.");
         logger.debug("Email is unique.");
@@ -61,6 +62,29 @@ public class UserService implements UserDetailsService {
     {
         logger.debug("Get all users");
         return userRepository.findAll();
+    }
+
+    public List<User> getAllUsersExcept(String userName) {
+        logger.debug("Get all users except for user: " + userName);
+        return userRepository.findByUserNameNot(userName);
+    }
+
+    public List<User> getAllUsersExcept(List<String> userNames, String userName) {
+        if (userNames == null)
+            userNames = Collections.emptyList();
+        userNames.add(userName);
+        logger.debug("Get all users except for users: " + userNames.toString());
+        return userRepository.findByUserNameNotIn(userNames);
+    }
+
+    public User getUserById(Long id) {
+        logger.debug("Get user by ID: " + id);
+        return userRepository.findOne(id);
+    }
+
+    public User getUserByUserName(String userName) {
+        logger.debug("Get user by user name: " + userName);
+        return userRepository.findByUserName(userName);
     }
 
 }

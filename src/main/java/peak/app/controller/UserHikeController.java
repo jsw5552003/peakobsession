@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import peak.app.common.AuthenticationFacade;
+import peak.app.model.Friend;
 import peak.app.model.Mountain;
 import peak.app.model.UserHike;
+import peak.app.service.FriendService;
 import peak.app.service.MountainService;
 import peak.app.service.UserHikeService;
 import peak.app.view.HikeView;
@@ -33,6 +35,9 @@ public class UserHikeController {
     @Autowired
     MountainService mountainService;
     
+    @Autowired
+    FriendService friendService;
+
     @Autowired
     private AuthenticationFacade authenticationFacade;
     
@@ -63,6 +68,12 @@ public class UserHikeController {
             		logger.debug("     Mountain: " + mountain.getName());
             	}
             }
+            if (hikeList.get(i).getFriends() != null) {
+                for (Friend friend : hikeList.get(i).getFriends()) {
+                    hikeView.addFriend(friend.getName());
+                    logger.debug("     Friend: " + friend.getName());
+                }
+            }
             hikes[i] = hikeView;
             
         }
@@ -78,21 +89,24 @@ public class UserHikeController {
     public String addHike(Model model)
     {
     	logger.info("Handling a request to add a hike.");
-    	commonAddHike(model);
+        String userName = authenticationFacade.getAuthentication().getName();
+        commonAddHike(model, userName);
     	return "addHike";
     }
     
     @RequestMapping(value = "/myhikes/addhike", method = RequestMethod.POST)
     public String addHike(@RequestParam(value="date")@DateTimeFormat(iso = ISO.DATE)LocalDate date,
                           @RequestParam(value="miles")double miles, @RequestParam(value="elevation")int elevation,
-                          @RequestParam(value="mountain", required = false)List<String> mountains, Model model)
+            @RequestParam(value = "mountain", required = false) List<String> mountains,
+            @RequestParam(value = "friend", required = false) List<String> friends, Model model)
     {
         logger.debug("Handling a request to add a hike with date: " + date.toString() + " miles: " + miles + 
                 " elevation: " + elevation);
         logger.debug("                Mountains: " + (mountains == null ? "None" : mountains.size()));
+        logger.debug("                Friends: " + (friends == null ? "None" : friends.size()));
         String userName = authenticationFacade.getAuthentication().getName();
         logger.debug("User: " + userName);
-        commonAddHike(model);
+        commonAddHike(model, userName);
         UserHike hike = new UserHike(date, miles, elevation);
         if(mountains != null)
         {
@@ -103,16 +117,24 @@ public class UserHikeController {
                 hike.addMountain(mountain);
             }
         }
+        if (friends != null) {
+            for (String id : friends) {
+                logger.debug("                 Friend ID: " + id);
+                Friend friend = new Friend(Long.parseLong(id));
+                hike.addFriend(friend);
+            }
+        }
         hikeService.addHike(hike, userName);
         StatusMessage status = new StatusMessage("Hike successfully added for date: " + date.toString() + ".", true);
         model.addAttribute("status", status);
         return "addHike";
     }
     
-    private void commonAddHike(Model model)
+    private void commonAddHike(Model model, String userName)
     {
         LocalDate local = LocalDate.now();
         model.addAttribute("today", local.toString());
         model.addAttribute("mountains", mountainService.getAllMountains());
+        model.addAttribute("friends", friendService.getAllFriends(userName));
     }
 }

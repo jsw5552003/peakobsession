@@ -33,6 +33,14 @@ CREATE TABLE USER_HIKES_MOUNTAINS (
   foreign key (USER_HIKE_ID ) references user_hikes(ID),
   foreign key (MOUNTAIN_ID ) references mountains(ID) );
   
+DROP TABLE IF EXISTS USER_HIKES_FRIENDS;
+
+CREATE TABLE USER_HIKES_FRIENDS (
+  USER_HIKE_ID BIGINT,
+  FRIEND_ID BIGINT,
+  foreign key (USER_HIKE_ID ) references user_hikes(ID),
+  foreign key (FRIEND_ID ) references friends(ID) );
+  
 DROP TABLE IF EXISTS ROLES;
 
 CREATE TABLE ROLES(

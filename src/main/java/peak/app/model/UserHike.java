@@ -36,6 +36,10 @@ public class UserHike {
             inverseJoinColumns=@JoinColumn(name="MOUNTAIN_ID"))
     private List<Mountain> mountains;
 
+    @ManyToMany
+    @JoinTable(name = "USER_HIKES_FRIENDS", joinColumns = @JoinColumn(name = "USER_HIKE_ID"), inverseJoinColumns = @JoinColumn(name = "FRIEND_ID"))
+    private List<Friend> friends;
+
     public UserHike() {
 		super();
 	}  
@@ -92,6 +96,20 @@ public class UserHike {
         if(this.mountains == null)
             this.mountains = new ArrayList<Mountain>();
         this.mountains.add(mountain);
+    }
+
+    public List<Friend> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<Friend> friends) {
+        this.friends = friends;
+    }
+
+    public void addFriend(Friend friend) {
+        if (this.friends == null)
+            this.friends = new ArrayList<Friend>();
+        this.friends.add(friend);
     }
 
     public User getUser()
