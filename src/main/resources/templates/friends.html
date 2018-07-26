@@ -7,12 +7,70 @@
 <body>
     <nav th:replace="fragments/navbar :: navbar"></nav>
     <div class="container">
+        <!-- Header -->
         <div class="row pt-3">
             <div class="col">
                 <div class="alert alert-primary">
                     <h2 th:text="'Friends'"></h2>
                     <h4 th:text="'Hiking Friends.'"></h4>
                 </div>
+            </div>
+        </div>
+        <!-- Status -->
+        <div class="row" th:if="${status}">
+            <div class="col">
+                <div class="alert alert-danger" th:if="${not status.success}" th:text="${status.message}"></div>
+                <div class="alert alert-success" th:if="${status.success}" th:text="${status.message}"></div>
+            </div>
+        </div>
+        <!-- Add Friend Header -->
+        <div class="row pt-3">
+            <div class="col">
+                <h2>Add Friend</h2>
+            </div>
+        </div>
+        <!-- Add Friend Form -->
+        <div class="row">
+            <div class="col">
+                <form action="/friends/addfriend" method="post">
+                    <div class="form-group">
+                        <label for="name">Name</label> <input type="text"
+                            class="form-control" id="name" name="name" required="required"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="user">User</label>
+                        <select class="form-control chosen" id="user" name="user">
+                            <option th:if="${!users.empty}" hidden="hidden">Select the user (if friend is on the site)</option>
+                            <option th:if="${users.empty}">There are no users left for you to choose.</option>
+                            <option th:each="user : ${users}" th:attr="value=${user.id}" th:text="${user.userName}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group pt-3">
+                       <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Friends List Header -->
+        <div class="row pt-3">
+            <div class="col">
+                <h2>Friends List</h2>
+            </div>            
+        </div>
+        <div class="row">
+            <div class="col">
+                <table id="friendsTable" class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Friend</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-warning" th:each="friend : ${friends}">
+                    <td th:text="${friend.name}"></td>
+                  </tr>
+                </tbody>
+                </table>
             </div>
         </div>
     </div>

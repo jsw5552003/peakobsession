@@ -13,6 +13,8 @@ public class HikeView {
     
     private List<String> mountains;
 
+    private List<String> friends;
+
     public String getDate()
     {
         return date;
@@ -55,6 +57,20 @@ public class HikeView {
 			this.mountains = new ArrayList<String>();
 		this.mountains.add(mountain);
 	}
+
+    public List<String> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<String> friends) {
+        this.friends = friends;
+    }
+
+    public void addFriend(String friend) {
+        if (this.friends == null)
+            this.friends = new ArrayList<String>();
+        this.friends.add(friend);
+    }
     
 
 }

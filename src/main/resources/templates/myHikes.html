@@ -24,6 +24,7 @@
 			        <th>Mountains</th>
 			        <th>Miles</th>
 			        <th>Elevation</th>
+			        <th>Friends</th>
 			      </tr>
 			    </thead>
 			      <tbody>
@@ -32,6 +33,7 @@
 			        <td><div th:each="mountain : ${hike.mountains}"><span th:text="${mountain}"></span></div></td>
 			        <td th:text="${hike.miles}"></td>
 			        <td th:text="${hike.elevation}"></td>
+			        <td><div th:each="friend : ${hike.friends}"><span th:text="${friend}"></span></div></td>
 			      </tr>
 			      </tbody>
 			      <tfoot>
@@ -40,6 +42,7 @@
 			        <td></td>
 			        <td id="footerMiles"></td>
 			        <td id="footerElevation"></td>
+			        <td></td>
 			      </tr>
 			      </tfoot>
 			    </table>
