@@ -46,6 +46,15 @@ public class UserHikeService {
     }
     
     @Transactional
+    public List<UserHike> getAllHikes() {
+        logger.info("Get all hikes.");
+        ArrayList<UserHike> hikeList = new ArrayList<>();
+        Iterable<UserHike> iterable = hikeRepository.findAll();
+        iterable.forEach(hikeList::add);
+        return hikeList;
+    }
+
+    @Transactional
     public void addHike(UserHike hike, String userString)
     {
     	logger.info("Add a hike for user: " + userString);
