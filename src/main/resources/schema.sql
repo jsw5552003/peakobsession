@@ -16,7 +16,7 @@ CREATE TABLE USER_HIKES (
   DATE DATE NOT NULL,
   MILEAGE   DOUBLE NOT NULL,
   ELEVATION INTEGER,
-  foreign key (USER_ID ) references users(ID));
+  foreign key (USER_ID ) references USERS(ID));
   
 DROP TABLE IF EXISTS MOUNTAINS;
 
@@ -30,8 +30,8 @@ DROP TABLE IF EXISTS USER_HIKES_MOUNTAINS;
 CREATE TABLE USER_HIKES_MOUNTAINS (
   USER_HIKE_ID BIGINT,
   MOUNTAIN_ID BIGINT,
-  foreign key (USER_HIKE_ID ) references user_hikes(ID),
-  foreign key (MOUNTAIN_ID ) references mountains(ID) );
+  foreign key (USER_HIKE_ID ) references USER_HIKES(ID),
+  foreign key (MOUNTAIN_ID ) references MOUNTAINS(ID) );
   
 DROP TABLE IF EXISTS USER_HIKES_FRIENDS;
 
@@ -52,8 +52,8 @@ DROP TABLE IF EXISTS USERS_ROLES;
 CREATE TABLE USERS_ROLES (
   USER_ID BIGINT,
   ROLE_ID BIGINT,
-  foreign key (USER_ID ) references users(ID),
-  foreign key (ROLE_ID ) references roles(ID) );
+  foreign key (USER_ID ) references USERS(ID),
+  foreign key (ROLE_ID ) references ROLES(ID) );
   
 DROP TABLE IF EXISTS MOUNTAIN_LISTS;
 
@@ -67,15 +67,15 @@ DROP TABLE IF EXISTS MOUNTAIN_LISTS_MOUNTAINS;
 CREATE TABLE MOUNTAIN_LISTS_MOUNTAINS (
   MOUNTAIN_LIST_ID BIGINT,
   MOUNTAIN_ID BIGINT,
-  foreign key (MOUNTAIN_LIST_ID ) references mountain_lists(ID),
-  foreign key (MOUNTAIN_ID ) references mountains(ID) );
+  foreign key (MOUNTAIN_LIST_ID ) references MOUNTAIN_LISTS(ID),
+  foreign key (MOUNTAIN_ID ) references MOUNTAINS(ID) );
   
 DROP TABLE IF EXISTS FEATURES;
 
 CREATE TABLE FEATURES (
   ID BIGINT PRIMARY KEY auto_increment,
   USER_ID BIGINT,
-  foreign key (USER_ID ) references users(ID),
+  foreign key (USER_ID ) references USERS(ID),
   ENTERED_DATE DATE,
   ACCEPTED_DATE DATE,
   COMPLETED_DATE DATE,
@@ -91,8 +91,8 @@ CREATE TABLE FEATURE_VOTES (
   ID BIGINT PRIMARY KEY auto_increment,
   USER_ID BIGINT,
   FEATURE_ID BIGINT,
-  foreign key (USER_ID ) references users(ID),
-  foreign key (FEATURE_ID ) references features(ID)
+  foreign key (USER_ID ) references USERS(ID),
+  foreign key (FEATURE_ID ) references FEATURES(ID)
   );
   
 DROP TABLE IF EXISTS FRIENDS;
@@ -102,6 +102,6 @@ CREATE TABLE FRIENDS (
   USER_ID BIGINT,
   FRIEND_USER_ID BIGINT,
   NAME VARCHAR(50),
-  foreign key (USER_ID ) references users(ID),
-  foreign key (FRIEND_USER_ID ) references users(ID)
+  foreign key (USER_ID ) references USERS(ID),
+  foreign key (FRIEND_USER_ID ) references USERS(ID)
   );
