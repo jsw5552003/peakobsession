@@ -52,6 +52,7 @@ public class UserController {
         {
             status = new StatusMessage(e.getMessage(), false);
             model.addAttribute("status", status);
+            model.addAttribute("failedUser", user);
             logger.debug("Caught authentication exception, send back to create user page");
             return "newUser";
         }
