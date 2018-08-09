@@ -8,12 +8,12 @@
     <div class="container">
         <div class="row pt-3">
             <div class="col">
-             <div class="alert alert-primary">
+             <div class="alert alert-peak">
                 <h2 th:text="${list.name}"></h2>
                 <h4 th:text="${list.description}"></h4>
-                <a class="btn btn-info"  
+                <a class="btn btn-peak"  
                 th:href="@{/list/user(name=${list.name},type=${list.type})}">My Progress</a>
-                <a class="btn btn-info"  
+                <a class="btn btn-peak"  
                 th:href="@{/list/grid/user(name=${list.name},type=${list.type})}">Grid Progress</a>
              </div>
             </div>

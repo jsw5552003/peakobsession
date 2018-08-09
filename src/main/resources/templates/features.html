@@ -2,25 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <div th:replace="fragments/header :: header"></div>
-    <style>
-        .nav-link.active {
-                background-color: rgb(204, 229, 255) !important; 
-        }
-    </style>
-    
 </head>
 <body>
     <nav th:replace="fragments/navbar :: navbar"></nav>
     <div class="container">
         <div class="row pt-3">
             <div class="col">
-             <div class="alert alert-primary">Features are functionality that you would like to see added to the website.  You can suggest a new feature or vote
+             <div class="alert alert-peak">Features are functionality that you would like to see added to the website.  You can suggest a new feature or vote
              for other people's feature suggestions that you would like to see implemented. Features are listed below and are divided into suggested, accepted (being worked on or scheduled 
              to be worked on) and complete (already added to the site).</div>
             </div>
         </div>
         <div class="row">
-            <div class="col"><a class="btn btn-info" href="/features/addfeature">Suggest Feature</a></div>
+            <div class="col"><a class="btn btn-peak" href="/features/addfeature">Suggest Feature</a></div>
         </div>
         <div class="row" th:if="${status}">
             <div class="col">
@@ -32,13 +26,13 @@
             <div class="col">
                 <ul class="nav nav-tabs nav-justified">
 				    <li class="nav-item">
-				        <a class="nav-link active" data-toggle="tab" href="#panel1" role="tab">Suggested</a>
+				        <a class="nav-link color-brown active" data-toggle="tab" href="#panel1" role="tab">Suggested</a>
 				    </li>
 				    <li class="nav-item">
-				        <a class="nav-link" data-toggle="tab" href="#panel2" role="tab">Accepted</a>
+				        <a class="nav-link color-brown" data-toggle="tab" href="#panel2" role="tab">Accepted</a>
 				    </li>
 				    <li class="nav-item">
-				        <a class="nav-link" data-toggle="tab" href="#panel3" role="tab">Completed</a>
+				        <a class="nav-link color-brown" data-toggle="tab" href="#panel3" role="tab">Completed</a>
 				    </li>
 				</ul>
 				<div class="tab-content card">

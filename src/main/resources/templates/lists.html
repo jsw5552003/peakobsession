@@ -8,11 +8,11 @@
     <div class="container">
         <div class="row pt-3">
             <div class="col">
-             <div class="alert alert-primary">Hiking Lists:</div>
+             <div class="alert alert-peak">Hiking Lists:</div>
             </div>
         </div>
         <div class="row">
-            <div class="col" th:each="list : ${lists}"><a class="btn btn-info" 
+            <div class="col" th:each="list : ${lists}"><a class="btn btn-peak" 
                 th:text="${list.name}"  
                 th:href="@{/list(name=${list.name},type=${list.type})}"></a>
             </div>

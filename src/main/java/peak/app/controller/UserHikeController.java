@@ -130,6 +130,11 @@ public class UserHikeController {
         return "addHike";
     }
     
+    @RequestMapping(value = "/myhikes/deletehike", method = RequestMethod.POST)
+    public String deleteHike(@RequestParam(value = "id") long hikeId, Model model) {
+        return showAllHikes(model);
+    }
+
     private void commonAddHike(Model model, String userName)
     {
         LocalDate local = LocalDate.now();

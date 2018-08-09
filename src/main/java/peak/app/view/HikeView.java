@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HikeView {
+    private Long id;
     
     private String date;
     
@@ -70,6 +71,14 @@ public class HikeView {
         if (this.friends == null)
             this.friends = new ArrayList<String>();
         this.friends.add(friend);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
     
 

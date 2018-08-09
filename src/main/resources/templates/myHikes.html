@@ -1,6 +1,10 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header"></head>
+<head>
+    <div th:replace="fragments/header :: header"></div>
+    <link rel="stylesheet" type="text/css" href="/webjars/datatables/css/jquery.dataTables.min.css"/>
+    <script type="text/javascript" src="/webjars/datatables/js/jquery.dataTables.min.js"></script>
+</head>
 <body>
     <nav th:replace="fragments/navbar :: navbar"></nav>
     <div class="container">
@@ -20,6 +24,7 @@
                 <table id="myHikesTable" class="table table-hover">
                 <thead>
 			      <tr>
+			        <th></th>
 			        <th>Date</th>
 			        <th>Mountains</th>
 			        <th>Miles</th>
@@ -28,7 +33,9 @@
 			      </tr>
 			    </thead>
 			      <tbody>
-			      <tr class="table-warning" th:each="hike : ${hikes}">
+			      <tr class="table-success" th:each="hike : ${hikes}">
+			        <td class="w-5 text-nowrap"><a th:href="@{#}" onclick="$('#myModal').modal('show');" ><img src="/images/icons/edit32.png"></img></a>
+			        <a th:href="@{/myhikes/deletehike(id=${hike.id})}"><img src="/images/icons/delete32.png"></img></a></td>
 			        <td th:text="${hike.date}"></td>
 			        <td><div th:each="mountain : ${hike.mountains}"><span th:text="${mountain}"></span></div></td>
 			        <td th:text="${hike.miles}"></td>
@@ -38,6 +45,7 @@
 			      </tbody>
 			      <tfoot>
 			      <tr class="table-dark">
+			        <td></td>
 			        <td>Total:</td>
 			        <td></td>
 			        <td id="footerMiles"></td>
@@ -50,13 +58,32 @@
         </div>
         <div class="row py-3">
             <div class="col">
-                <a class="btn btn-info" href="/home">Home</a>
+                <a class="btn btn-peak" href="/home">Home</a>
             </div>
             <div class="col">
-                <a class="btn btn-info" href="/myhikes/addhike">Add Hike</a>
+                <a class="btn btn-peak" href="/myhikes/addhike">Add Hike</a>
             </div>
         </div>
     </div>
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Delete Hike</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p>Are you sure you want to delete this hike?</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-peak">Yes</button>
+	        <button type="button" class="btn btn-peak" data-dismiss="modal">No</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
     <script>
     $(document).ready(function(){
     	jQuery.fn.dataTable.Api.register( 'sum()', function ( ) {
@@ -73,16 +100,23 @@
     	} );
     	
         $('#myHikesTable').DataTable( {
+
             drawCallback: function () {
                 var api = this.api();
                 $('#footerMiles').html(
-                  api.column( 2, {page:'current'} ).data().sum()
-                );
-                $('#footerElevation').html(
                   api.column( 3, {page:'current'} ).data().sum()
                 );
-              }
+                $('#footerElevation').html(
+                  api.column( 4, {page:'current'} ).data().sum()
+                );
+              },
+        
+	        "columnDefs": [
+	            { "orderable": false, "targets": 0 }
+	          ],
+	          "order": [[ 1, 'asc' ]]
             } );
+               
     });
     </script>
 </body>

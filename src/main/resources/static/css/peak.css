@@ -8,8 +8,16 @@
 	color: #338233;
 }
 
-.color-navitem {
+.color-white {
+	color: white;
+}
+
+.color-black {
 	color: black;
+}
+
+.color-brown {
+    color: #b5651d;
 }
 
 .bg-peak {
@@ -17,7 +25,17 @@
 }
 
 .alert-peak {
-    color: black;
+    color: white;
     background-color: #b5651d;
     border-color: #b5651d;
+}
+
+.nav-link.active {
+    background-color: #b5651d !important;
+    color : white !important;
+}
+
+.w-5 {
+	width : 5%;
+}
 }

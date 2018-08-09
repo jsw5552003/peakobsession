@@ -1,4 +1,4 @@
-use PEAK_DB;
+--use PEAK_DB;
 
 /*INSERT INTO USER_HIKES (DATE, MILEAGE, ELEVATION) VALUES
   (DATE '2015-12-17', '9.8', '2300'),
@@ -41,16 +41,16 @@ use PEAK_DB;
   ('Mansfield', '4395')
   ; 
   
--- INSERT INTO USERS (id, first_name, last_name, email, password, user_name) VALUES 
---   (1, 'John', 'Wilson', 'jwilson@worcester.edu', 'password', 'Grizzly'),
---   (2, 'Boring', 'User', 'a@b.com', 'password', 'User');
+ INSERT INTO USERS (id, first_name, last_name, email, password, user_name) VALUES 
+   (1, 'John', 'Wilson', 'jwilson@worcester.edu', 'password', 'Grizzly'),
+   (2, 'Boring', 'User', 'a@b.com', 'password', 'User');
   
  INSERT INTO roles (id, name) VALUES (1, 'ROLE_ADMIN');
  INSERT INTO roles (id, name) VALUES (2, 'ROLE_USER');
  
--- INSERT INTO users_roles (user_id, role_id) VALUES (1, 1);
--- INSERT INTO users_roles (user_id, role_id) VALUES (1, 2);
--- INSERT INTO users_roles (user_id, role_id) VALUES (2, 2);
+ INSERT INTO users_roles (user_id, role_id) VALUES (1, 1);
+ INSERT INTO users_roles (user_id, role_id) VALUES (1, 2);
+ INSERT INTO users_roles (user_id, role_id) VALUES (2, 2);
  
  INSERT INTO mountain_lists (NAME, DESCRIPTION) VALUES 
  ('NH48', 'The highest 48 peaks in New Hampshire.'), 
