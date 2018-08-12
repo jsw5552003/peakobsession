@@ -33,9 +33,9 @@
 			      </tr>
 			    </thead>
 			      <tbody>
-			      <tr class="table-success" th:each="hike : ${hikes}">
-			        <td class="w-5 text-nowrap"><a th:href="@{#}" onclick="$('#myModal').modal('show');" ><img src="/images/icons/edit32.png"></img></a>
-			        <a th:href="@{/myhikes/deletehike(id=${hike.id})}"><img src="/images/icons/delete32.png"></img></a></td>
+			      <tr class="bg-peak-moss" th:each="hike : ${hikes}">
+			        <td class="w-5 text-nowrap"><a th:href="@{/myhikes/edithike(id=${hike.id})}"><img src="/images/icons/edit32.png"></img></a>
+			        <a th:href="@{#}" th:onclick="'deleteHike(\'' + ${hike.id} + '\');'" ><img src="/images/icons/delete32.png"></img></a></td>
 			        <td th:text="${hike.date}"></td>
 			        <td><div th:each="mountain : ${hike.mountains}"><span th:text="${mountain}"></span></div></td>
 			        <td th:text="${hike.miles}"></td>
@@ -68,7 +68,7 @@
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
 	  <div class="modal-dialog modal-dialog-centered" role="document">
 	    <div class="modal-content">
-	      <div class="modal-header">
+	      <div class="modal-header alert-peak">
 	        <h5 class="modal-title">Delete Hike</h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
@@ -78,13 +78,22 @@
 	        <p>Are you sure you want to delete this hike?</p>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-peak">Yes</button>
+	      	<form action="/myhikes/deletehike" method="post">
+	      	<input type="hidden" id="deleteId" name="id"></input>
+	        <button type="submit" class="btn btn-peak">Yes</button>
+	        </form>
 	        <button type="button" class="btn btn-peak" data-dismiss="modal">No</button>
 	      </div>
 	    </div>
 	  </div>
 	</div>
     <script>
+    function deleteHike(id)
+    {
+    	$('#deleteId').val(id);
+    	$('#myModal').modal('show');
+    }
+    
     $(document).ready(function(){
     	jQuery.fn.dataTable.Api.register( 'sum()', function ( ) {
     	    return this.flatten().reduce( function ( a, b ) {

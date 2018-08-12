@@ -8,7 +8,7 @@ import peak.app.model.User;
 import peak.app.model.UserHike;
 
 
-public interface UserHikeRepository extends CrudRepository<UserHike, String> {
+public interface UserHikeRepository extends CrudRepository<UserHike, Long> {
 
     List<UserHike> findByUser(User user);
 }

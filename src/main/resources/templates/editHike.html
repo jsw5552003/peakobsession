@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/header :: header"></div>
+</head>
+<body>
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+	<div class="container">
+		<div class="row pt-3">
+			<div class="col">
+				<h2>Edit Hike</h2>
+			</div>
+		</div>
+		<div class="row" th:if="${status}">
+            <div class="col">
+                <div class="alert alert-danger" th:if="${not status.success}" th:text="${status.message}"></div>
+                <div class="alert alert-success" th:if="${status.success}" th:text="${status.message}"></div>
+            </div>
+        </div>
+		<div class="row">
+			<div class="col">
+				<form action="/myhikes/edithike" method="post">
+					<div class="form-group">
+						<label for="date">Date</label> <input type="date" 
+							th:attr="max=${today}, value=${hike.date}"
+							class="form-control" id="date" name="date" required="required"/>
+					</div>
+					<div class="form-group">
+						<label for="miles">Miles</label> <input type="text"
+							class="form-control" id="miles" name="miles" required="required"
+							th:attr="value=${hike.miles}"/>
+					</div>
+					<div class="form-group">
+                        <label for="elevation">Elevation</label> <input type="text"
+                            class="form-control" id="elevation" name="elevation" required="required"
+                            th:attr="value=${hike.elevation}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="mountain">Mountain(s)</label>
+	                    <select class="form-control chosen" id="mountain" name="mountain" multiple="multiple" 
+	                    data-placeholder="Select your mountain(s)" >
+	                        <option th:each="mountain : ${mountains}" th:text="${mountain.name}" 
+	                        th:attr="value=${mountain.id}" th:selected="${hike.getMountains().contains(mountain.name)}">
+	                        </option>
+	                    </select>
+	                </div>
+	                <div class="form-group">
+                        <label for="friend">Friend(s)</label>
+                        <select class="form-control chosen" id="friend" name="friend" multiple="multiple" 
+                        data-placeholder="Select your friend(s)" >
+                            <option th:each="friend : ${friends}" th:attr="value=${friend.id}" th:text="${friend.name}"
+                            	th:selected="${hike.getFriends().contains(friend.name)}">
+                            </option>
+                        </select>
+                    </div>
+                    <input type="hidden" id="id" name="id" th:attr="value=${hike.id}"></input>
+					<div class="form-group pt-3">
+					   <button type="submit" class="btn btn-peak">Update</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="row padding-top-md py-3">
+            <div class="col">
+                <a class="btn btn-peak" href="/myhikes/">My Hikes</a>
+            </div>
+        </div>
+	</div>
+	<script>
+    $(document).ready(function(){
+        $('#mountain').chosen();
+        $('#friend').chosen();
+    });
+    </script>
+</body>
+</html>

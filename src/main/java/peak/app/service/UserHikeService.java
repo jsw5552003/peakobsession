@@ -53,11 +53,31 @@ public class UserHikeService {
         iterable.forEach(hikeList::add);
         return hikeList;
     }
+    
+    public UserHike getHike(Long hikeId)
+    {
+    	logger.info("Get a single hike id: " + hikeId);
+    	return hikeRepository.findOne(hikeId);
+    }
+    
+    public void deleteHike(Long hikeId)
+    {
+    	logger.info("Delete a hike id: " + hikeId);
+    	hikeRepository.delete(hikeId);
+    }
 
     @Transactional
     public void addHike(UserHike hike, String userString)
     {
     	logger.info("Add a hike for user: " + userString);
+    	User user = userRepository.findByEmail(userString);
+    	hike.setUser(user);
+    	hikeRepository.save(hike);
+    }
+    
+    public void editHike(UserHike hike, String userString)
+    {
+    	logger.info("Edit a hike for user: " + userString);
     	User user = userRepository.findByEmail(userString);
     	hike.setUser(user);
     	hikeRepository.save(hike);
