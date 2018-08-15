@@ -17,7 +17,7 @@ public class Friend {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    // the name the user wants the friend to be known by.
+    // if the friend is not a user
     private String name;
 
     @JoinColumn(name = "USER_ID")

@@ -42,6 +42,7 @@
                         <select class="form-control chosen" id="user" name="user">
                             <option th:if="${!users.empty}" hidden="hidden">Select the user (if friend is on the site)</option>
                             <option th:if="${users.empty}">There are no users left for you to choose.</option>
+                            <option value="0">None</option>
                             <option th:each="user : ${users}" th:attr="value=${user.id}" th:text="${user.userName}"></option>
                         </select>
                     </div>
@@ -75,4 +76,13 @@
         </div>
     </div>
 </body>
+<script>
+	$('#user').change(function() {
+		if($(this).val()==0){
+			alert("None");
+		}else{
+			alert("Picked One");
+		}
+	}); 
+</script>
 </html>

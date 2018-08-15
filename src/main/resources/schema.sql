@@ -1,6 +1,6 @@
 --USE PEAK_DB;
 
-DROP TABLE IF EXISTS USERS;
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
   ID BIGINT PRIMARY KEY auto_increment,
@@ -10,9 +10,9 @@ CREATE TABLE users (
   EMAIL VARCHAR(50),
   PASSWORD VARCHAR(60));
 
-DROP TABLE IF EXISTS USER_HIKES;
+DROP TABLE IF EXISTS user_hikes;
 
-DROP TABLE IF EXISTS FRIENDS;
+DROP TABLE IF EXISTS friends;
 
 CREATE TABLE friends (
   ID BIGINT PRIMARY KEY auto_increment,
@@ -31,7 +31,7 @@ CREATE TABLE user_hikes (
   ELEVATION INTEGER,
   foreign key (USER_ID ) references users(ID));
   
-DROP TABLE IF EXISTS MOUNTAINS;
+DROP TABLE IF EXISTS mountains;
 
 CREATE TABLE mountains (
   ID BIGINT PRIMARY KEY auto_increment,
@@ -39,7 +39,7 @@ CREATE TABLE mountains (
   ELEVATION INTEGER,
   STATE VARCHAR(10));
   
-DROP TABLE IF EXISTS USER_HIKES_MOUNTAINS;
+DROP TABLE IF EXISTS user_hikes_mountains;
 
 CREATE TABLE user_hikes_mountains (
   USER_HIKE_ID BIGINT,
@@ -47,7 +47,7 @@ CREATE TABLE user_hikes_mountains (
   foreign key (USER_HIKE_ID ) references user_hikes(ID),
   foreign key (MOUNTAIN_ID ) references mountains(ID) );
   
-DROP TABLE IF EXISTS USER_HIKES_FRIENDS;
+DROP TABLE IF EXISTS user_hikes_friends;
 
 CREATE TABLE user_hikes_friends (
   USER_HIKE_ID BIGINT,
@@ -55,13 +55,13 @@ CREATE TABLE user_hikes_friends (
   foreign key (USER_HIKE_ID ) references user_hikes(ID),
   foreign key (FRIEND_ID ) references friends(ID) );
   
-DROP TABLE IF EXISTS ROLES;
+DROP TABLE IF EXISTS roles;
 
 CREATE TABLE roles(
   ID BIGINT PRIMARY KEY auto_increment,
   NAME VARCHAR(50));
   
-DROP TABLE IF EXISTS USERS_ROLES;
+DROP TABLE IF EXISTS users_roles;
 
 CREATE TABLE users_roles (
   USER_ID BIGINT,
@@ -69,14 +69,14 @@ CREATE TABLE users_roles (
   foreign key (USER_ID ) references users(ID),
   foreign key (ROLE_ID ) references roles(ID) );
   
-DROP TABLE IF EXISTS MOUNTAIN_LISTS;
+DROP TABLE IF EXISTS mountain_lists;
 
 CREATE TABLE mountain_lists (
   ID BIGINT PRIMARY KEY auto_increment,
   NAME VARCHAR(100),
   DESCRIPTION VARCHAR(250));
 
-DROP TABLE IF EXISTS MOUNTAIN_LISTS_MOUNTAINS;  
+DROP TABLE IF EXISTS mountain_lists_mountains;  
   
 CREATE TABLE mountain_lists_mountains (
   MOUNTAIN_LIST_ID BIGINT,
@@ -84,7 +84,7 @@ CREATE TABLE mountain_lists_mountains (
   foreign key (MOUNTAIN_LIST_ID ) references mountain_lists(ID),
   foreign key (MOUNTAIN_ID ) references mountains(ID) );
   
-DROP TABLE IF EXISTS FEATURES;
+DROP TABLE IF EXISTS features;
 
 CREATE TABLE features (
   ID BIGINT PRIMARY KEY auto_increment,
@@ -99,7 +99,7 @@ CREATE TABLE features (
   COMPLETED TINYINT NOT NULL DEFAULT 0
   );
   
-DROP TABLE IF EXISTS FEATURE_VOTES;
+DROP TABLE IF EXISTS feature_votes;
 
 CREATE TABLE feature_votes (
   ID BIGINT PRIMARY KEY auto_increment,
