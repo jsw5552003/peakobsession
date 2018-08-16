@@ -41,7 +41,7 @@
                         <label for="user">User</label>
                         <select class="form-control chosen" id="user" name="user">
                             <option th:if="${!users.empty}" hidden="hidden">Select the user (if friend is on the site)</option>
-                            <option th:if="${users.empty}">There are no users left for you to choose.</option>
+                            <option th:if="${users.empty}" hidden="hidden">There are no users left for you to choose.</option>
                             <option value="0">None</option>
                             <option th:each="user : ${users}" th:attr="value=${user.id}" th:text="${user.userName}"></option>
                         </select>
@@ -64,13 +64,27 @@
                 <thead>
                   <tr>
                     <th>Friend</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
-                    <tr class="table-warning" th:each="friend : ${friends}">
-                    <td th:text="${friend.name}"></td>
+                    <tr class="bg-peak-moss" th:each="friend : ${friends}">
+                    <td th:text="${friend.userName}"></td>
+                    <td th:text="${friend.firstName}"></td>
+                    <td th:text="${friend.lastName}"></td>
+                    <td></td>
                   </tr>
                 </tbody>
+                <tfoot>
+			      <tr class="table-dark">
+			        <td></td>
+			        <td></td>
+			        <td></td>
+			        <td></td>
+			      </tr>
+			      </tfoot>
                 </table>
             </div>
         </div>
@@ -79,9 +93,11 @@
 <script>
 	$('#user').change(function() {
 		if($(this).val()==0){
-			alert("None");
+			$('#name').val("");
+			$('#name').prop( "disabled", false );
 		}else{
-			alert("Picked One");
+			$('#name').val($(this).find("option:selected").text());
+			$('#name').prop( "disabled", true );
 		}
 	}); 
 </script>
