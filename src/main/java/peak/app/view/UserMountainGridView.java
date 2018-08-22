@@ -3,7 +3,7 @@ package peak.app.view;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserMountainGridView {
+public class UserMountainGridView extends ListView {
 	
 	UserMountainListView [] grid;
 	

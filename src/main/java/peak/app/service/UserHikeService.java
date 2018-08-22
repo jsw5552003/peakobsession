@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import peak.app.model.Friend;
 import peak.app.model.Mountain;
 import peak.app.model.User;
 import peak.app.model.UserHike;
@@ -104,6 +105,29 @@ public class UserHikeService {
                     }
                 }
             }
+        }
+        logger.info("Found mountains: " + mountainsHiked.size());
+
+        return mountainsHiked;
+    }
+
+    public Map<Mountain, LocalDate> getMountainsHiked(String userString, String friendUserName) {
+        logger.info("Get mountains hiked for user: " + userString + " with friend: " + friendUserName);
+        List<UserHike> hikeList = getAllHikes(userString);
+        HashMap<Mountain, LocalDate> mountainsHiked = new HashMap<>();
+        Friend friend = new Friend();
+        friend.setName(friendUserName);
+        for (UserHike hike : hikeList) {
+            if (hike.getFriends() != null && hike.getFriends().contains(friend))
+                for (Mountain mountain : hike.getMountains()) {
+                    if (!mountainsHiked.containsKey(mountain)) {
+                        mountainsHiked.put(mountain, hike.getDate());
+                    } else {
+                        if (mountainsHiked.get(mountain).isAfter(hike.getDate())) {
+                            mountainsHiked.put(mountain, hike.getDate());
+                        }
+                    }
+                }
         }
         logger.info("Found mountains: " + mountainsHiked.size());
 

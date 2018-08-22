@@ -10,6 +10,8 @@ public class ListView {
     
     private String description;
     
+    private String friend;
+
     public ListView() {}
     
     public ListView(String name)
@@ -50,6 +52,14 @@ public class ListView {
     public void setDescription(String description)
     {
         this.description = description;
+    }
+
+    public String getFriend() {
+        return friend;
+    }
+
+    public void setFriend(String friend) {
+        this.friend = friend;
     }
 
 }

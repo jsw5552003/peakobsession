@@ -6,16 +6,51 @@
 <body>
     <nav th:replace="fragments/navbar :: navbar"></nav>
     <div class="container">
-        <div class="row pt-3">
+        <div class="row mt-3">
             <div class="col">
              <div class="alert alert-peak">
-                <h2>Grid View</h2>
-                <h2 th:text="${grid.grid[0].name}"></h2>
-                <h4 th:text="${grid.grid[0].description}"></h4>
-             </div>
+                <h2 th:text="|${grid.name} Grid|"></h2>
+                <h4 th:text="${grid.description}"></h4>
+                
+                <hr class="color-white bg-white"/>
+                
+                <div class="form-group row">
+                         <div class="col-3">
+                             <a class="btn btn-peak"  
+                             th:href="@{/list/user(name=${grid.name},type=${grid.type})}">My Progress</a>
+                         </div>
+                         <div class="col-3">
+                         <a class="btn btn-peak"  
+                         th:href="@{/list/grid/user(name=${grid.name},type=${grid.type})}">Grid Progress</a>
+                         </div>
+                         
+                         <label for="friend" >Progress With a Friend</label>
+                         <div class="col-3">
+                             <select class="form-control" id="friend" name="friend">
+                                   <option hidden="hidden">Pick a friend...</option>
+                                   <option th:each="friend : ${friends}" th:text="${friend}"></option>
+                             </select>
+                         </div>
+                </div>
             </div>
+           </div>
         </div>
        <div th:if="${grid.grid[0].isMountainType()}" th:replace="fragments/mountaingrid :: mountaingrid"></div>
     </div>
+    <script th:inline="javascript">
+		/*<![CDATA[*/
+		
+		var name = [[${grid.name}]];
+		var type = [[${grid.type}]];
+		
+		/*]]>*/
+		</script>
+		
+		<script>
+		$('#friend').change(function() {
+		    location.href='/list/user\?name='+name+'\u0026type='+type+'\u0026friend='+$(this).val();
+		    
+		}); 
+	</script>
 </body>
 </html>

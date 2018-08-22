@@ -28,7 +28,12 @@ public class FriendService {
     {
         logger.debug("Get all friends for user: " + userString);
         User user = userRepository.findByUserName(userString);
-        return friendRepository.findByUser(user);
+        List<Friend> friends = friendRepository.findByUser(user);
+        if (friends != null)
+            logger.debug("Found " + friends.size() + " friends.");
+        else
+            logger.debug("Found 0 friends.");
+        return friends;
     }
 
     public void addFriend(Friend friend) {
