@@ -8,4 +8,7 @@ public final class Constants {
     public final static String ROLE_ADMIN = "ROLE_ADMIN";
     public final static int FOUR_K_FEET = 4000;
     public final static DateTimeFormatter date_format_yyymmdd = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    public final static String FRIEND_TOGETHER = "T";
+    public final static String FRIEND_SEPERATE = "S";
 }

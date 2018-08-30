@@ -26,8 +26,10 @@
                     <th>Number</th>
                     <th>Mountain</th>
                     <th>Elevation</th>
-                    <th>Completed</th>
-                    <th>Date</th>
+                    <th th:if="${friendlist}" th:text="${user}"></th>
+                    <th th:if="${friendlist}" th:text="${list.friend}"></th>
+                    <th th:unless="${friendlist}">Completed</th>
+                    <th th:unless="${friendlist}">Date</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,7 +38,8 @@
                     <td th:text="${mountain.name}"></td>
                     <td th:text="${mountain.elevation}"></td>
                     <td><span th:if="${mountain.completed}">X</span></td>
-                    <td th:text="${mountain.date}"></td>
+                    <td th:if="${friendlist}"><span th:if="${friendlist.mountains[iterStat.index].completed}">X</span></td>
+                    <td th:unless="${friendlist}" th:text="${mountain.date}"></td>
                 </tr>
             </tbody>
         </table>

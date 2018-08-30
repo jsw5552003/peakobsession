@@ -91,11 +91,12 @@ public class ListController {
 
     @RequestMapping("/list/user")
     public String showUserList(@RequestParam(value = "name") String name, @RequestParam(value = "type") String type,
-            @RequestParam(value = "friend", required = false) String friend, Model model)
+            @RequestParam(value = "friend", required = false) String friend,
+            @RequestParam(value = "friendtype", required = false) String friendType, Model model)
     {
         logger.info("Handling a request to show user list: " + name + " type: " + type);
         if (friend != null) {
-            logger.info("Checking list with friend: " + friend);
+            logger.info("Checking list with friend: " + friend + " type: " + friendType);
         }
         String userName = authenticationFacade.getAuthentication().getName();
         // Friends
@@ -105,15 +106,30 @@ public class ListController {
         {
             MountainList mList = listService.getMountainList(name);
             UserMountainListView returnList = new UserMountainListView();
+            UserMountainListView friendReturnList = null;
             returnList.setDescription(mList.getDescription());
             returnList.setName(mList.getName());
             returnList.setType(Constants.LIST_TYPE_MOUNTAIN);
             returnList.setFriend(friend);
             Map<Mountain, LocalDate> mountainMap = null;
+            Map<Mountain, LocalDate> mountainMapFriend = null;
             if (friend == null) {
+                logger.info("Getting hikes for user only.");
                 mountainMap = hikeService.getMountainsHiked(userName);
             } else {
-                mountainMap = hikeService.getMountainsHiked(userName, friend);
+                if (Constants.FRIEND_TOGETHER.equals(friendType)) {
+                    logger.info("Getting hikes for user and friend together.");
+                    mountainMap = hikeService.getMountainsHiked(userName, friend);
+                } else {
+                    logger.info("Getting hikes for user and friend individually.");
+                    mountainMap = hikeService.getMountainsHiked(userName);
+                    mountainMapFriend = hikeService.getMountainsHiked(friend);
+                    friendReturnList = new UserMountainListView();
+                    checkList(mountainMapFriend, mList, friendReturnList);
+                    model.addAttribute("friendlist", friendReturnList);
+                    logger.info("Adding a list for friend of size: "
+                            + (friendReturnList.getMountains() == null ? 0 : friendReturnList.getMountains().size()));
+                }
             }
             checkList(mountainMap, mList, returnList);
             logger.info("Adding a list of size: "
@@ -175,8 +191,12 @@ public class ListController {
         } else {
             List<String> friendStringList = friendList.stream().map(Friend::getName).filter(Objects::nonNull)
                     .collect(Collectors.toList());
+            List<String> userStringList = friendList.stream().filter(foo -> foo.getFriendUser() != null)
+                    .map(Friend::getName)
+                    .filter(Objects::nonNull).collect(Collectors.toList());
             logger.debug("Friends passed to UI: " + friendStringList);
             model.addAttribute("friends", friendStringList);
+            model.addAttribute("friends2", userStringList);
         }
     }
 

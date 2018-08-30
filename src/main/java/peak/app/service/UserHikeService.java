@@ -39,7 +39,7 @@ public class UserHikeService {
     public List<UserHike> getAllHikes(String userString)
     {
         logger.info("Get all hikes for user: " + userString);
-        User user = userRepository.findByEmail(userString);
+        User user = userRepository.findByUserName(userString);
         ArrayList<UserHike> hikeList = new ArrayList<>();
         Iterable<UserHike> iterable = hikeRepository.findByUser(user);
         iterable.forEach(hikeList::add);
@@ -71,7 +71,7 @@ public class UserHikeService {
     public void addHike(UserHike hike, String userString)
     {
     	logger.info("Add a hike for user: " + userString);
-    	User user = userRepository.findByEmail(userString);
+        User user = userRepository.findByUserName(userString);
     	hike.setUser(user);
     	hikeRepository.save(hike);
     }
@@ -79,7 +79,7 @@ public class UserHikeService {
     public void editHike(UserHike hike, String userString)
     {
     	logger.info("Edit a hike for user: " + userString);
-    	User user = userRepository.findByEmail(userString);
+        User user = userRepository.findByUserName(userString);
     	hike.setUser(user);
     	hikeRepository.save(hike);
     }

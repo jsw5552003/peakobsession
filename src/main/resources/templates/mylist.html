@@ -24,14 +24,20 @@
 			             <a class="btn btn-peak"  
 			             th:href="@{/list/grid/user(name=${list.name},type=${list.type})}">Grid Progress</a>
 			             </div>
-			             
-			                 <label for="friend" >Progress With a Friend</label>
 			             <div class="col-3">
+			                 <label for="friend" >Friend Together</label>
 			                 <select class="form-control" id="friend" name="friend">
 			                       <option hidden="hidden">Pick a friend...</option>
-			                       <option th:each="friend : ${friends}" th:text="${friend}" th:selected="${friend.equals(list.friend)}"></option>
+			                       <option th:each="friend : ${friends}" th:text="${friend}" th:selected="${friend.equals(list.friend) and friendlist == null}"></option>
 			                 </select>
 			             </div>
+			             <div class="col-3">
+                             <label for="friend" >Friend Separately</label>
+                             <select class="form-control" id="friend2" name="friend2">
+                                   <option hidden="hidden">Pick a friend...</option>
+                                   <option th:each="friend : ${friends2}" th:text="${friend}" th:selected="${friend.equals(list.friend) and friendlist != null}"></option>
+                             </select>
+                         </div>
 			         </div>
 			     </div>
 			 </div>
@@ -51,7 +57,11 @@ var type = [[${list.type}]];
 
 <script>
 $('#friend').change(function() {
-    location.href='/list/user\?name='+name+'\u0026type='+type+'\u0026friend='+$(this).val();
+    location.href='/list/user\?name='+name+'\u0026type='+type+'\u0026friend='+$(this).val()+'\u0026friendtype=T';
+    
+});
+$('#friend2').change(function() {
+    location.href='/list/user\?name='+name+'\u0026type='+type+'\u0026friend='+$(this).val()+'\u0026friendtype=S';
     
 }); 
 </script>
