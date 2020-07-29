@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<div th:replace="fragments/header :: header"></div>
+	</head>
+<body>
+	<nav th:replace="fragments/navbar :: navbar"></nav>
+	<div class="container">
+		<div class="row pt-3">
+			<div class="col">
+				<div class="alert alert-peak">
+					<h2 th:text="${name}"></h2>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

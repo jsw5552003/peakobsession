@@ -74,7 +74,7 @@ public class UserHikeController {
     
     @RequestMapping(value = "/myhikes/addhike", method = RequestMethod.POST)
     public String addHike(@RequestParam(value="date")@DateTimeFormat(iso = ISO.DATE)LocalDate date,
-                          @RequestParam(value="miles")double miles, @RequestParam(value="elevation")int elevation,
+                          @RequestParam(value="miles", required = false)double miles, @RequestParam(value="elevation", required = false)int elevation,
             @RequestParam(value = "mountain", required = false) List<String> mountains,
             @RequestParam(value = "friend", required = false) List<String> friends, Model model)
     {

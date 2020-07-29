@@ -2,7 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-<div th:replace="fragments/header :: header"></div>
+	<div th:replace="fragments/header :: header"></div>
+	<link rel="stylesheet" type="text/css" href="/webjars/datatables/css/jquery.dataTables.min.css"/>
+    <script type="text/javascript" src="/webjars/datatables/js/jquery.dataTables.min.js"></script>
 </head>
 <body>
 	<nav th:replace="fragments/navbar :: navbar"></nav>
@@ -11,10 +13,35 @@
 			<div class="col">
 				<div class="alert alert-peak">
 					<h2 th:text="'Mountains'"></h2>
-					<h4 th:text="'A comprehensive list of the mountains in the northeast.'"></h4>
+					<h4 th:text="'The mountains of the northeast.'"></h4>
 				</div>
 			</div>
 		</div>
+		<div class="row">
+            <div class="col">
+                <table id="mountainTable" class="table table-hover">
+                <thead>
+			      <tr>
+			        <th>Mountain</th>
+			        <th>Elevation</th>
+			        <th>State</th>
+			      </tr>
+			    </thead>
+			      <tbody>
+			      <tr class="bg-peak-moss" th:each="mountain : ${mountains}">
+			        <td><a th:text="${mountain.name}" th:href="@{/mountain(name=${mountain.name})}"></a></td>
+			        <td th:text="${mountain.elevation}"></td>
+			        <td th:text="${mountain.state}"></td>
+			      </tr>
+			      </tbody>
+			    </table>
+            </div>
+        </div>
 	</div>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('#mountainTable').DataTable();
+	} );
+	</script>
 </body>
 </html>

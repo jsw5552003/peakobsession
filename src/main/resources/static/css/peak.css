@@ -32,6 +32,10 @@
 	background-color: #90c17f !important;
 }
 
+.height-25 {
+	height: 25px;
+}
+
 .alert-peak {
     color: white;
     background-color: #b5651d;

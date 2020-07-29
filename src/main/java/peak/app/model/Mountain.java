@@ -17,6 +17,8 @@ public class Mountain implements Comparable<Mountain> {
     
     private int elevation;
     
+    private String state;
+    
     public Mountain()
     {
         super();
@@ -64,7 +66,15 @@ public class Mountain implements Comparable<Mountain> {
         this.elevation = elevation;
     }
 
-    @Override
+    public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	@Override
     public String toString()
     {
         return "Mountain Name: " + name + " Elevation: " + elevation;
